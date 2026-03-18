@@ -16,6 +16,11 @@ Python Cloud SDK wraps Aspose.Words Cloud API so you could seamlessly integrate 
 - [Convert a document to desired file format](https://docs.aspose.cloud/display/wordscloud/Convert+Document+to+Destination+Format+with+Detailed+Settings+and+Save+Result+to+Storage) along with detailed settings.
 - Convert an encrypted PDF document into Word document format.
 
+## Enhancements in Version 26.3
+
+- Various stability and performance improvements.
+
+
 ## Enhancements in Version 26.2
 
 - Implemented ability to save documents as Docling JSON format.
@@ -435,7 +440,7 @@ Firstly, create an account at [Aspose for Cloud](https://dashboard.aspose.cloud/
 
 Execute `python setup.py install --user` and import the package as `import asposewordscloud`.
 
-The complete source code is available at [GitHub Repository](https://github.com/aspose-words-cloud/aspose-words-cloud-python).
+The complete source code is available at [GitHub Repository](https://github.com/aspose-words-cloud/Aspose.Words-Cloud-SDK-for-Python).
 
 ## Delete Watermarks from Word Document via Python
 
@@ -454,4 +459,4 @@ The complete source code is available at [GitHub Repository](https://github.com/
         # End README example
 ```
 
-[Product Page](https://products.aspose.cloud/words/python) | [Documentation](https://docs.aspose.cloud/display/wordscloud/Home) | [API Reference](https://apireference.aspose.cloud/words/) | [Code Samples](https://github.com/aspose-words-cloud/aspose-words-cloud-python) | [Blog](https://blog.aspose.cloud/category/words/) | [Free Support](https://forum.aspose.cloud/c/words) | [Free Trial](https://dashboard.aspose.cloud/#/apps)
+[Product Page](https://products.aspose.cloud/words/python) | [Documentation](https://docs.aspose.cloud/display/wordscloud/Home) | [API Reference](https://apireference.aspose.cloud/words/) | [Code Samples](https://github.com/aspose-words-cloud/Aspose.Words-Cloud-SDK-for-Python) | [Blog](https://blog.aspose.cloud/category/words/) | [Free Support](https://forum.aspose.cloud/c/words) | [Free Trial](https://dashboard.aspose.cloud/#/apps)
