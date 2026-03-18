@@ -230,7 +230,7 @@ class OfficeMathObject(object):
         :param math_object_type: The math_object_type of this OfficeMathObject.  # noqa: E501
         :type: str
         """
-        allowed_values = ["OMath", "OMathPara", "Accent", "Bar", "BorderBox", "Box", "Delimiter", "Degree", "Argument", "Array", "Fraction", "Denominator", "Numerator", "Function", "FunctionName", "GroupCharacter", "Limit", "LowerLimit", "UpperLimit", "Matrix", "MatrixRow", "NAry", "Phantom", "Radical", "SubscriptPart", "SuperscriptPart", "PreSubSuperscript", "Subscript", "SubSuperscript", "Supercript"]  # noqa: E501
+        allowed_values = ["OMath", "OMathPara", "Accent", "Bar", "BorderBox", "Box", "Delimiter", "Degree", "Argument", "Array", "Fraction", "Denominator", "Numerator", "Function", "FunctionName", "GroupCharacter", "Limit", "LowerLimit", "UpperLimit", "Matrix", "MatrixRow", "NAry", "Phantom", "Radical", "SubscriptPart", "SuperscriptPart", "PreSubSuperscript", "Subscript", "SubSuperscript", "Superscript", "None"]  # noqa: E501
         if not math_object_type.isdigit():
             if math_object_type not in allowed_values:
                 raise ValueError(
