@@ -139,7 +139,7 @@ class TestHeaderFooter(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteHeaderFooterRequest(name=remote_file_name, section_path='', index=0, folder=remote_data_folder)
 
-        self.words_api.delete_header_footer(request)
+         self.words_api.delete_header_footer(request)
 
 
     #
@@ -167,7 +167,7 @@ class TestHeaderFooter(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteHeadersFootersRequest(name=remote_file_name, section_path='', folder=remote_data_folder)
 
-        self.words_api.delete_headers_footers(request)
+         self.words_api.delete_headers_footers(request)
 
 
     #

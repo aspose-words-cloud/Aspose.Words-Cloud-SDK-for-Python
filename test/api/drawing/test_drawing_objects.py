@@ -320,7 +320,7 @@ class TestDrawingObjects(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteDrawingObjectRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
-        self.words_api.delete_drawing_object(request)
+         self.words_api.delete_drawing_object(request)
 
 
     #
@@ -348,7 +348,7 @@ class TestDrawingObjects(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteDrawingObjectRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
-        self.words_api.delete_drawing_object(request)
+         self.words_api.delete_drawing_object(request)
 
 
     #

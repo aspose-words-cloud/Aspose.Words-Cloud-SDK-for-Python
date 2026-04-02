@@ -26,3 +26,6 @@ class BaseRequestObject(object):
 
     def getparts(self, response):
         return decoder.MultipartDecoder(response.data, response.getheader('Content-Type'), 'UTF-8').parts
+
+    def get_original_request(self):
+        return self

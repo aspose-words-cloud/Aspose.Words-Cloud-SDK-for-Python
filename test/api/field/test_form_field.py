@@ -244,7 +244,7 @@ class TestFormField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFormFieldRequest(name=remote_file_name, index=0, node_path='sections/0', folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-        self.words_api.delete_form_field(request)
+         self.words_api.delete_form_field(request)
 
 
     #
@@ -272,5 +272,5 @@ class TestFormField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFormFieldRequest(name=remote_file_name, index=0, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-        self.words_api.delete_form_field(request)
+         self.words_api.delete_form_field(request)
 

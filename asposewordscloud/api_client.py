@@ -197,6 +197,7 @@ class ApiClient(object):
         'ImageEntryList, _': asposewordscloud.models.ImageEntryList,
         'InfoAdditionalItem, _': asposewordscloud.models.InfoAdditionalItem,
         'InfoResponse, _': asposewordscloud.models.InfoResponse,
+        'JobInfo, _': asposewordscloud.models.JobInfo,
         'JpegSaveOptionsData, _': asposewordscloud.models.JpegSaveOptionsData,
         'JsonDataLoadOptions, _': asposewordscloud.models.JsonDataLoadOptions,
         'Link, _': asposewordscloud.models.Link,
@@ -366,6 +367,27 @@ class ApiClient(object):
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'python sdk 26.3'
+
+    class HttpPartResponse(object):
+        def __init__(self, data, headers, status):
+            self.data = data
+            self.status = status
+            self.reason = ''
+            self._headers = headers or {}
+
+        def getheaders(self):
+            return self._headers
+
+        def getheader(self, name):
+            if name in self._headers:
+                return self._headers[name]
+
+            lower_name = name.lower()
+            for key, value in self._headers.items():
+                if key.lower() == lower_name:
+                    return value
+
+            return None
 
     def __del__(self):
         if not self.pool is None:
@@ -606,6 +628,55 @@ class ApiClient(object):
                 raise rest.ApiException(status=0, reason="Response part is invalid.")
 
         return results
+
+    def call_job_result(self, job_id):
+        response = self.call_api(
+            '/v4.0/words/job',
+            'GET',
+            query_params=[('id', job_id)],
+            header_params={},
+            body=None,
+            post_params=None,
+            response_type='multipart',
+            auth_settings=['JWT'],
+            is_async=None,
+            _preload_content=True,
+            _request_timeout=None)
+        return self.deserialize(response.data, response.getheaders(), 'multipart')
+
+    def deserialize_job_info_part(self, part):
+        return self.deserialize(part.content, part.headers, 'JobInfo')
+
+    def deserialize_http_response_part(self, request, part):
+        try:
+            packet_parts = part.content.split(b"\r\n\r\n", 1)
+            if len(packet_parts) != 2:
+                raise rest.ApiException(status=400, reason='Failed to parse HTTP response part.')
+
+            header_parts = packet_parts[0].split(b"\r\n")
+            if len(header_parts) == 0:
+                raise rest.ApiException(status=400, reason='Failed to parse HTTP response part.')
+
+            status_line = header_parts[0].decode('UTF-8')
+            status_line_parts = status_line.split(' ', 2)
+            if len(status_line_parts) < 3 or not status_line_parts[0].startswith('HTTP/'):
+                raise rest.ApiException(status=400, reason='Failed to parse HTTP response part.')
+
+            status_code = int(status_line_parts[1])
+            headers = {}
+            for header_line in header_parts[1:]:
+                header_line_parts = header_line.decode('UTF-8').split(':', 1)
+                if len(header_line_parts) == 2:
+                    headers[header_line_parts[0].strip()] = header_line_parts[1].strip()
+
+            if status_code < 200 or status_code >= 300:
+                raise rest.ApiException(status=status_code, reason=packet_parts[1].decode('UTF-8'))
+
+            return request.deserialize_response(self, self.HttpPartResponse(packet_parts[1], headers, status_code))
+        except rest.ApiException:
+            raise
+        except Exception:
+            raise rest.ApiException(status=400, reason='Failed to parse HTTP response part.')
 
     def deserialize_files_collection(self, data, headers):
         result = {}

@@ -8,6 +8,7 @@ from __future__ import absolute_import
 from asposewordscloud.apis.words_api import WordsApi
 # import ApiClient
 from asposewordscloud.api_client import ApiClient
+from asposewordscloud.job_handler import JobHandler
 from asposewordscloud.configuration import Configuration
 # import models into sdk package
 from asposewordscloud.models.file_reference import FileReference
@@ -132,6 +133,7 @@ from asposewordscloud.models.image_entry import ImageEntry
 from asposewordscloud.models.image_entry_list import ImageEntryList
 from asposewordscloud.models.info_additional_item import InfoAdditionalItem
 from asposewordscloud.models.info_response import InfoResponse
+from asposewordscloud.models.job_info import JobInfo
 from asposewordscloud.models.jpeg_save_options_data import JpegSaveOptionsData
 from asposewordscloud.models.json_data_load_options import JsonDataLoadOptions
 from asposewordscloud.models.link import Link

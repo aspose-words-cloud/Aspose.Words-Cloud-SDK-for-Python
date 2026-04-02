@@ -45,6 +45,9 @@ class UploadFileRequest(BaseRequestObject):
         self.path = path
         self.storage_name = storage_name
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'file_content' is set
         if self.file_content is None:

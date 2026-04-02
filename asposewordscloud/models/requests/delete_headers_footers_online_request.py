@@ -59,6 +59,9 @@ class DeleteHeadersFootersOnlineRequest(BaseRequestObject):
         self.revision_date_time = revision_date_time
         self.headers_footers_types = headers_footers_types
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'document' is set
         if self.document is None:

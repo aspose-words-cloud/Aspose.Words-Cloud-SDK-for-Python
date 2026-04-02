@@ -57,6 +57,9 @@ class GetHeaderFootersRequest(BaseRequestObject):
         self.open_type_support = open_type_support
         self.filter_by_type = filter_by_type
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'name' is set
         if self.name is None:

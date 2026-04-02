@@ -53,6 +53,9 @@ class SaveAsOnlineRequest(BaseRequestObject):
         self.open_type_support = open_type_support
         self.fonts_location = fonts_location
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'document' is set
         if self.document is None:

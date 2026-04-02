@@ -34,6 +34,7 @@ import typing_extensions
 import six
 from asposewordscloud.rest import ApiException
 from asposewordscloud.api_client import ApiClient
+from asposewordscloud.job_handler import JobHandler
 from asposewordscloud.models.requests import GetPublicKeyRequest
 
 from base64 import b64decode, b64encode
@@ -134,7 +135,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -146,7 +147,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def accept_all_revisions_online(self, request, **kwargs):  # noqa: E501
@@ -214,7 +217,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -226,7 +229,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def append_document(self, request, **kwargs):  # noqa: E501
@@ -299,7 +304,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -311,7 +316,97 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def append_document_job(self, request, **kwargs):  # noqa: E501
+        """Appends documents to the original document.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param name str : The filename of the input document. (required)
+        :param document_list BaseEntryList : <see cref="BaseEntryList"/> with a list of entries to append. (required)
+        :param folder str : Original document folder.
+        :param storage str : Original document storage.
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param dest_file_name str : Result path of the document after the operation. If this parameter is omitted then result of the operation will be saved as the source document.
+        :param revision_author str : Initials of the author to use for revisions.If you set this parameter and then make some changes to the document programmatically, save the document and later open the document in MS Word you will see these changes as revisions.
+        :param revision_date_time str : The date and time to use for revisions.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.append_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.append_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.append_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.append_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def append_document_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Appends documents to the original document.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request AppendDocumentJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method append_document_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def append_document_online(self, request, **kwargs):  # noqa: E501
@@ -382,7 +477,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -394,7 +489,95 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def append_document_online_job(self, request, **kwargs):  # noqa: E501
+        """Appends documents to the original document.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param document file : Original document. (required)
+        :param document_list BaseEntryList : <see cref="BaseEntryList"/> with a list of entries to append. (required)
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param dest_file_name str : Result path of the document after the operation. If this parameter is omitted then result of the operation will be saved as the source document.
+        :param revision_author str : Initials of the author to use for revisions.If you set this parameter and then make some changes to the document programmatically, save the document and later open the document in MS Word you will see these changes as revisions.
+        :param revision_date_time str : The date and time to use for revisions.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.append_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.append_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.append_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.append_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def append_document_online_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Appends documents to the original document.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request AppendDocumentOnlineJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method append_document_online_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def apply_style_to_document_element(self, request, **kwargs):  # noqa: E501
@@ -468,7 +651,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -480,7 +663,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def apply_style_to_document_element_online(self, request, **kwargs):  # noqa: E501
@@ -552,7 +737,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -564,7 +749,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def build_report(self, request, **kwargs):  # noqa: E501
@@ -636,7 +823,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -648,7 +835,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def build_report_online(self, request, **kwargs):  # noqa: E501
@@ -714,7 +903,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -726,7 +915,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def compare_document(self, request, **kwargs):  # noqa: E501
@@ -798,7 +989,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -810,7 +1001,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def compare_document_online(self, request, **kwargs):  # noqa: E501
@@ -880,7 +1073,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -892,7 +1085,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def compress_document(self, request, **kwargs):  # noqa: E501
@@ -963,7 +1158,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -975,7 +1170,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def compress_document_online(self, request, **kwargs):  # noqa: E501
@@ -1044,7 +1241,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1056,7 +1253,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def convert_document(self, request, **kwargs):  # noqa: E501
@@ -1128,7 +1327,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1140,7 +1339,96 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def convert_document_job(self, request, **kwargs):  # noqa: E501
+        """Converts a document on a local drive to the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param document file : Converting document. (required)
+        :param format str : The format to convert. (required)
+        :param out_path str : The path to the output document on a local storage.
+        :param file_name_field_value str : The filename of the output document, that will be used when the resulting document has a dynamic field {filename}. If it is not set, the "sourceFilename" will be used instead.
+        :param storage str : Original document storage.
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param fonts_location str : Folder in filestorage with custom fonts.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.convert_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.convert_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.convert_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.convert_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def convert_document_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Converts a document on a local drive to the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request ConvertDocumentJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method convert_document_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def copy_file(self, request, **kwargs):  # noqa: E501
@@ -1204,7 +1492,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1216,7 +1504,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def copy_folder(self, request, **kwargs):  # noqa: E501
@@ -1279,7 +1569,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1291,7 +1581,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def copy_style(self, request, **kwargs):  # noqa: E501
@@ -1364,7 +1656,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1376,7 +1668,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def copy_style_online(self, request, **kwargs):  # noqa: E501
@@ -1447,7 +1741,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1459,7 +1753,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def copy_styles_from_template(self, request, **kwargs):  # noqa: E501
@@ -1529,7 +1825,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1541,7 +1837,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def create_document(self, request, **kwargs):  # noqa: E501
@@ -1603,7 +1901,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1615,7 +1913,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def create_folder(self, request, **kwargs):  # noqa: E501
@@ -1676,7 +1976,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1688,7 +1988,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def create_or_update_document_property(self, request, **kwargs):  # noqa: E501
@@ -1762,7 +2064,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1774,7 +2076,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def create_or_update_document_property_online(self, request, **kwargs):  # noqa: E501
@@ -1846,7 +2150,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1858,7 +2162,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_all_paragraph_tab_stops(self, request, **kwargs):  # noqa: E501
@@ -1927,7 +2233,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -1939,7 +2245,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_all_paragraph_tab_stops_online(self, request, **kwargs):  # noqa: E501
@@ -2009,7 +2317,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2021,7 +2329,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_bookmark(self, request, **kwargs):  # noqa: E501
@@ -2091,7 +2401,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2103,7 +2413,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_bookmark_online(self, request, **kwargs):  # noqa: E501
@@ -2174,7 +2486,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2186,7 +2498,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_bookmarks(self, request, **kwargs):  # noqa: E501
@@ -2255,7 +2569,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2267,7 +2581,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_bookmarks_online(self, request, **kwargs):  # noqa: E501
@@ -2337,7 +2653,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2349,7 +2665,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_border(self, request, **kwargs):  # noqa: E501
@@ -2420,7 +2738,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2432,7 +2750,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_border_online(self, request, **kwargs):  # noqa: E501
@@ -2504,7 +2824,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2516,7 +2836,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_borders(self, request, **kwargs):  # noqa: E501
@@ -2586,7 +2908,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2598,7 +2920,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_borders_online(self, request, **kwargs):  # noqa: E501
@@ -2669,7 +2993,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2681,7 +3005,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_comment(self, request, **kwargs):  # noqa: E501
@@ -2751,7 +3077,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2763,7 +3089,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_comment_online(self, request, **kwargs):  # noqa: E501
@@ -2834,7 +3162,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2846,7 +3174,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_comments(self, request, **kwargs):  # noqa: E501
@@ -2915,7 +3245,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -2927,7 +3257,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_comments_online(self, request, **kwargs):  # noqa: E501
@@ -2997,7 +3329,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3009,7 +3341,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_custom_xml_part(self, request, **kwargs):  # noqa: E501
@@ -3079,7 +3413,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3091,7 +3425,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_custom_xml_part_online(self, request, **kwargs):  # noqa: E501
@@ -3162,7 +3498,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3174,7 +3510,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_custom_xml_parts(self, request, **kwargs):  # noqa: E501
@@ -3243,7 +3581,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3255,7 +3593,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_custom_xml_parts_online(self, request, **kwargs):  # noqa: E501
@@ -3325,7 +3665,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3337,7 +3677,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_document_property(self, request, **kwargs):  # noqa: E501
@@ -3407,7 +3749,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3419,7 +3761,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_document_property_online(self, request, **kwargs):  # noqa: E501
@@ -3490,7 +3834,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3502,7 +3846,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_drawing_object(self, request, **kwargs):  # noqa: E501
@@ -3573,7 +3919,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3585,7 +3931,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_drawing_object_online(self, request, **kwargs):  # noqa: E501
@@ -3657,7 +4005,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3669,7 +4017,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_field(self, request, **kwargs):  # noqa: E501
@@ -3740,7 +4090,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3752,7 +4102,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_field_online(self, request, **kwargs):  # noqa: E501
@@ -3824,7 +4176,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3836,7 +4188,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_fields(self, request, **kwargs):  # noqa: E501
@@ -3906,7 +4260,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -3918,7 +4272,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_fields_online(self, request, **kwargs):  # noqa: E501
@@ -3989,7 +4345,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4001,7 +4357,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_file(self, request, **kwargs):  # noqa: E501
@@ -4063,7 +4421,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4075,7 +4433,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_folder(self, request, **kwargs):  # noqa: E501
@@ -4137,7 +4497,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4149,7 +4509,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_footnote(self, request, **kwargs):  # noqa: E501
@@ -4220,7 +4582,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4232,7 +4594,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_footnote_online(self, request, **kwargs):  # noqa: E501
@@ -4304,7 +4668,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4316,7 +4680,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_form_field(self, request, **kwargs):  # noqa: E501
@@ -4387,7 +4753,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4399,7 +4765,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_form_field_online(self, request, **kwargs):  # noqa: E501
@@ -4471,7 +4839,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4483,7 +4851,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_header_footer(self, request, **kwargs):  # noqa: E501
@@ -4554,7 +4924,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4566,7 +4936,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_header_footer_online(self, request, **kwargs):  # noqa: E501
@@ -4638,7 +5010,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4650,7 +5022,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_headers_footers(self, request, **kwargs):  # noqa: E501
@@ -4721,7 +5095,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4733,7 +5107,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_headers_footers_online(self, request, **kwargs):  # noqa: E501
@@ -4805,7 +5181,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4817,7 +5193,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_macros(self, request, **kwargs):  # noqa: E501
@@ -4886,7 +5264,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4898,7 +5276,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_macros_online(self, request, **kwargs):  # noqa: E501
@@ -4968,7 +5348,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -4980,7 +5360,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_office_math_object(self, request, **kwargs):  # noqa: E501
@@ -5051,7 +5433,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5063,7 +5445,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_office_math_object_online(self, request, **kwargs):  # noqa: E501
@@ -5135,7 +5519,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5147,7 +5531,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_office_math_objects(self, request, **kwargs):  # noqa: E501
@@ -5216,7 +5602,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5228,7 +5614,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_office_math_objects_online(self, request, **kwargs):  # noqa: E501
@@ -5298,7 +5686,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5310,7 +5698,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph(self, request, **kwargs):  # noqa: E501
@@ -5381,7 +5771,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5393,7 +5783,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph_list_format(self, request, **kwargs):  # noqa: E501
@@ -5464,7 +5856,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5476,7 +5868,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph_list_format_online(self, request, **kwargs):  # noqa: E501
@@ -5548,7 +5942,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5560,7 +5954,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph_online(self, request, **kwargs):  # noqa: E501
@@ -5632,7 +6028,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5644,7 +6040,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph_tab_stop(self, request, **kwargs):  # noqa: E501
@@ -5714,7 +6112,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5726,7 +6124,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_paragraph_tab_stop_online(self, request, **kwargs):  # noqa: E501
@@ -5797,7 +6197,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5809,7 +6209,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_run(self, request, **kwargs):  # noqa: E501
@@ -5880,7 +6282,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5892,7 +6294,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_run_online(self, request, **kwargs):  # noqa: E501
@@ -5964,7 +6368,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -5976,7 +6380,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_section(self, request, **kwargs):  # noqa: E501
@@ -6046,7 +6452,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6058,7 +6464,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_section_online(self, request, **kwargs):  # noqa: E501
@@ -6129,7 +6537,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6141,7 +6549,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_structured_document_tag(self, request, **kwargs):  # noqa: E501
@@ -6212,7 +6622,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6224,7 +6634,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_structured_document_tag_online(self, request, **kwargs):  # noqa: E501
@@ -6296,7 +6708,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6308,7 +6720,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table(self, request, **kwargs):  # noqa: E501
@@ -6379,7 +6793,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6391,7 +6805,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table_cell(self, request, **kwargs):  # noqa: E501
@@ -6462,7 +6878,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6474,7 +6890,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table_cell_online(self, request, **kwargs):  # noqa: E501
@@ -6546,7 +6964,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6558,7 +6976,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table_online(self, request, **kwargs):  # noqa: E501
@@ -6630,7 +7050,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6642,7 +7062,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table_row(self, request, **kwargs):  # noqa: E501
@@ -6713,7 +7135,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6725,7 +7147,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_table_row_online(self, request, **kwargs):  # noqa: E501
@@ -6797,7 +7221,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6809,7 +7233,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_watermark(self, request, **kwargs):  # noqa: E501
@@ -6878,7 +7304,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6890,7 +7316,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def delete_watermark_online(self, request, **kwargs):  # noqa: E501
@@ -6960,7 +7388,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -6972,7 +7400,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def download_file(self, request, **kwargs):  # noqa: E501
@@ -7034,7 +7464,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7046,7 +7476,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def execute_mail_merge(self, request, **kwargs):  # noqa: E501
@@ -7123,7 +7555,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7135,7 +7567,101 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def execute_mail_merge_job(self, request, **kwargs):  # noqa: E501
+        """Executes a Mail Merge operation.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param name str : The filename of the input document. (required)
+        :param data str : Mail merge data.
+        :param options FieldOptions : Field options.
+        :param folder str : Original document folder.
+        :param storage str : Original document storage.
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param with_regions bool : The flag indicating whether to execute Mail Merge operation with regions.
+        :param mail_merge_data_file str : The data file.
+        :param cleanup str : The cleanup options.
+        :param use_whole_paragraph_as_region bool : The flag indicating whether paragraph with TableStart or TableEnd field should be fully included into mail merge region or particular range between TableStart and TableEnd fields. The default value is true.
+        :param merge_whole_document bool : The flag indicating whether fields in whole document are updated while executing of a mail merge with regions.
+        :param dest_file_name str : The filename of the output document. If this parameter is omitted, the result will be saved with autogenerated name.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.execute_mail_merge_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.execute_mail_merge_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.execute_mail_merge_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.execute_mail_merge_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def execute_mail_merge_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Executes a Mail Merge operation.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request ExecuteMailMergeJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method execute_mail_merge_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def execute_mail_merge_online(self, request, **kwargs):  # noqa: E501
@@ -7204,7 +7730,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7216,7 +7742,93 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def execute_mail_merge_online_job(self, request, **kwargs):  # noqa: E501
+        """Executes a Mail Merge operation online.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param template file : File with template. (required)
+        :param data file : File with mailmerge data. (required)
+        :param options FieldOptions : Field options.
+        :param with_regions bool : The flag indicating whether to execute Mail Merge operation with regions.
+        :param merge_whole_document bool : The flag indicating whether fields in whole document are updated while executing of a mail merge with regions.
+        :param cleanup str : The cleanup options.
+        :param document_file_name str : The filename of the output document, that will be used when the resulting document has a dynamic field {filename}. If it is not set, the "template" will be used instead.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.execute_mail_merge_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.execute_mail_merge_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.execute_mail_merge_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.execute_mail_merge_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def execute_mail_merge_online_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Executes a Mail Merge operation online.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request ExecuteMailMergeOnlineJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method execute_mail_merge_online_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def get_all_revisions(self, request, **kwargs):  # noqa: E501
@@ -7282,7 +7894,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7294,7 +7906,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_all_revisions_online(self, request, **kwargs):  # noqa: E501
@@ -7361,7 +7975,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7373,7 +7987,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_available_fonts(self, request, **kwargs):  # noqa: E501
@@ -7433,7 +8049,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7445,7 +8061,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_bookmark_by_name(self, request, **kwargs):  # noqa: E501
@@ -7512,7 +8130,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7524,7 +8142,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_bookmark_by_name_online(self, request, **kwargs):  # noqa: E501
@@ -7592,7 +8212,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7604,7 +8224,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_bookmarks(self, request, **kwargs):  # noqa: E501
@@ -7670,7 +8292,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7682,7 +8304,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_bookmarks_online(self, request, **kwargs):  # noqa: E501
@@ -7749,7 +8373,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7761,7 +8385,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_border(self, request, **kwargs):  # noqa: E501
@@ -7829,7 +8455,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7841,7 +8467,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_border_online(self, request, **kwargs):  # noqa: E501
@@ -7910,7 +8538,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -7922,7 +8550,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_borders(self, request, **kwargs):  # noqa: E501
@@ -7989,7 +8619,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8001,7 +8631,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_borders_online(self, request, **kwargs):  # noqa: E501
@@ -8069,7 +8701,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8081,7 +8713,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_comment(self, request, **kwargs):  # noqa: E501
@@ -8148,7 +8782,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8160,7 +8794,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_comment_online(self, request, **kwargs):  # noqa: E501
@@ -8228,7 +8864,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8240,7 +8876,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_comments(self, request, **kwargs):  # noqa: E501
@@ -8306,7 +8944,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8318,7 +8956,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_comments_online(self, request, **kwargs):  # noqa: E501
@@ -8385,7 +9025,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8397,7 +9037,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_custom_xml_part(self, request, **kwargs):  # noqa: E501
@@ -8464,7 +9106,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8476,7 +9118,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_custom_xml_part_online(self, request, **kwargs):  # noqa: E501
@@ -8544,7 +9188,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8556,7 +9200,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_custom_xml_parts(self, request, **kwargs):  # noqa: E501
@@ -8622,7 +9268,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8634,7 +9280,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_custom_xml_parts_online(self, request, **kwargs):  # noqa: E501
@@ -8701,7 +9349,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8713,7 +9361,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document(self, request, **kwargs):  # noqa: E501
@@ -8779,7 +9429,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8791,7 +9441,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_by_index(self, request, **kwargs):  # noqa: E501
@@ -8859,7 +9511,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8871,7 +9523,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_by_index_online(self, request, **kwargs):  # noqa: E501
@@ -8940,7 +9594,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -8952,7 +9606,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_image_data(self, request, **kwargs):  # noqa: E501
@@ -9020,7 +9676,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9032,7 +9688,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_image_data_online(self, request, **kwargs):  # noqa: E501
@@ -9101,7 +9759,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9113,7 +9771,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_ole_data(self, request, **kwargs):  # noqa: E501
@@ -9181,7 +9841,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9193,7 +9853,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_object_ole_data_online(self, request, **kwargs):  # noqa: E501
@@ -9262,7 +9924,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9274,7 +9936,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_objects(self, request, **kwargs):  # noqa: E501
@@ -9341,7 +10005,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9353,7 +10017,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_drawing_objects_online(self, request, **kwargs):  # noqa: E501
@@ -9421,7 +10087,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9433,7 +10099,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_field_names(self, request, **kwargs):  # noqa: E501
@@ -9500,7 +10168,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9512,7 +10180,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_field_names_online(self, request, **kwargs):  # noqa: E501
@@ -9580,7 +10250,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9592,7 +10262,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_hyperlink_by_index(self, request, **kwargs):  # noqa: E501
@@ -9659,7 +10331,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9671,7 +10343,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_hyperlink_by_index_online(self, request, **kwargs):  # noqa: E501
@@ -9739,7 +10413,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9751,7 +10425,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_hyperlinks(self, request, **kwargs):  # noqa: E501
@@ -9817,7 +10493,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9829,7 +10505,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_hyperlinks_online(self, request, **kwargs):  # noqa: E501
@@ -9896,7 +10574,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9908,7 +10586,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_properties(self, request, **kwargs):  # noqa: E501
@@ -9974,7 +10654,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -9986,7 +10666,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_properties_online(self, request, **kwargs):  # noqa: E501
@@ -10053,7 +10735,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10065,7 +10747,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_property(self, request, **kwargs):  # noqa: E501
@@ -10132,7 +10816,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10144,7 +10828,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_property_online(self, request, **kwargs):  # noqa: E501
@@ -10212,7 +10898,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10224,7 +10910,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_protection(self, request, **kwargs):  # noqa: E501
@@ -10290,7 +10978,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10302,7 +10990,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_protection_online(self, request, **kwargs):  # noqa: E501
@@ -10369,7 +11059,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10381,7 +11071,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_statistics(self, request, **kwargs):  # noqa: E501
@@ -10450,7 +11142,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10462,7 +11154,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_statistics_online(self, request, **kwargs):  # noqa: E501
@@ -10532,7 +11226,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10544,7 +11238,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_document_with_format(self, request, **kwargs):  # noqa: E501
@@ -10613,7 +11309,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10625,7 +11321,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_field(self, request, **kwargs):  # noqa: E501
@@ -10693,7 +11391,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10705,7 +11403,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_field_online(self, request, **kwargs):  # noqa: E501
@@ -10774,7 +11474,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10786,7 +11486,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_fields(self, request, **kwargs):  # noqa: E501
@@ -10853,7 +11555,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10865,7 +11567,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_fields_online(self, request, **kwargs):  # noqa: E501
@@ -10933,7 +11637,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -10945,7 +11649,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_files_list(self, request, **kwargs):  # noqa: E501
@@ -11006,7 +11712,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11018,7 +11724,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_footnote(self, request, **kwargs):  # noqa: E501
@@ -11086,7 +11794,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11098,7 +11806,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_footnote_online(self, request, **kwargs):  # noqa: E501
@@ -11167,7 +11877,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11179,7 +11889,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_footnotes(self, request, **kwargs):  # noqa: E501
@@ -11246,7 +11958,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11258,7 +11970,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_footnotes_online(self, request, **kwargs):  # noqa: E501
@@ -11326,7 +12040,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11338,7 +12052,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_form_field(self, request, **kwargs):  # noqa: E501
@@ -11406,7 +12122,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11418,7 +12134,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_form_field_online(self, request, **kwargs):  # noqa: E501
@@ -11487,7 +12205,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11499,7 +12217,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_form_fields(self, request, **kwargs):  # noqa: E501
@@ -11566,7 +12286,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11578,7 +12298,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_form_fields_online(self, request, **kwargs):  # noqa: E501
@@ -11646,7 +12368,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11658,7 +12380,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footer(self, request, **kwargs):  # noqa: E501
@@ -11726,7 +12450,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11738,7 +12462,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footer_of_section(self, request, **kwargs):  # noqa: E501
@@ -11807,7 +12533,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11819,7 +12545,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footer_of_section_online(self, request, **kwargs):  # noqa: E501
@@ -11889,7 +12617,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11901,7 +12629,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footer_online(self, request, **kwargs):  # noqa: E501
@@ -11970,7 +12700,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -11982,7 +12712,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footers(self, request, **kwargs):  # noqa: E501
@@ -12050,7 +12782,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12062,7 +12794,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_header_footers_online(self, request, **kwargs):  # noqa: E501
@@ -12131,7 +12865,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12143,7 +12877,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_info(self, request, **kwargs):  # noqa: E501
@@ -12202,7 +12938,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12214,7 +12950,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_list(self, request, **kwargs):  # noqa: E501
@@ -12281,7 +13019,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12293,7 +13031,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_list_online(self, request, **kwargs):  # noqa: E501
@@ -12361,7 +13101,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12373,7 +13113,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_lists(self, request, **kwargs):  # noqa: E501
@@ -12439,7 +13181,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12451,7 +13193,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_lists_online(self, request, **kwargs):  # noqa: E501
@@ -12518,7 +13262,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12530,7 +13274,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_office_math_object(self, request, **kwargs):  # noqa: E501
@@ -12598,7 +13344,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12610,7 +13356,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_office_math_object_online(self, request, **kwargs):  # noqa: E501
@@ -12679,7 +13427,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12691,7 +13439,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_office_math_objects(self, request, **kwargs):  # noqa: E501
@@ -12758,7 +13508,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12770,7 +13520,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_office_math_objects_online(self, request, **kwargs):  # noqa: E501
@@ -12838,7 +13590,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12850,7 +13602,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph(self, request, **kwargs):  # noqa: E501
@@ -12918,7 +13672,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -12930,7 +13684,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_format(self, request, **kwargs):  # noqa: E501
@@ -12998,7 +13754,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13010,7 +13766,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_format_online(self, request, **kwargs):  # noqa: E501
@@ -13079,7 +13837,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13091,7 +13849,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_list_format(self, request, **kwargs):  # noqa: E501
@@ -13159,7 +13919,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13171,7 +13931,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_list_format_online(self, request, **kwargs):  # noqa: E501
@@ -13240,7 +14002,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13252,7 +14014,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_online(self, request, **kwargs):  # noqa: E501
@@ -13321,7 +14085,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13333,7 +14097,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraphs(self, request, **kwargs):  # noqa: E501
@@ -13400,7 +14166,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13412,7 +14178,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraphs_online(self, request, **kwargs):  # noqa: E501
@@ -13480,7 +14248,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13492,7 +14260,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_tab_stops(self, request, **kwargs):  # noqa: E501
@@ -13560,7 +14330,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13572,7 +14342,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_paragraph_tab_stops_online(self, request, **kwargs):  # noqa: E501
@@ -13641,7 +14413,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13653,7 +14425,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_public_key(self, request, **kwargs):  # noqa: E501
@@ -13712,7 +14486,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13724,7 +14498,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_range_text(self, request, **kwargs):  # noqa: E501
@@ -13792,7 +14568,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13804,7 +14580,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_range_text_online(self, request, **kwargs):  # noqa: E501
@@ -13873,7 +14651,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13885,7 +14663,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_run(self, request, **kwargs):  # noqa: E501
@@ -13953,7 +14733,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -13965,7 +14745,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_run_font(self, request, **kwargs):  # noqa: E501
@@ -14033,7 +14815,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14045,7 +14827,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_run_font_online(self, request, **kwargs):  # noqa: E501
@@ -14114,7 +14898,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14126,7 +14910,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_run_online(self, request, **kwargs):  # noqa: E501
@@ -14195,7 +14981,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14207,7 +14993,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_runs(self, request, **kwargs):  # noqa: E501
@@ -14274,7 +15062,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14286,7 +15074,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_runs_online(self, request, **kwargs):  # noqa: E501
@@ -14354,7 +15144,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14366,7 +15156,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_section(self, request, **kwargs):  # noqa: E501
@@ -14433,7 +15225,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14445,7 +15237,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_section_online(self, request, **kwargs):  # noqa: E501
@@ -14513,7 +15307,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14525,7 +15319,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_section_page_setup(self, request, **kwargs):  # noqa: E501
@@ -14592,7 +15388,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14604,7 +15400,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_section_page_setup_online(self, request, **kwargs):  # noqa: E501
@@ -14672,7 +15470,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14684,7 +15482,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_sections(self, request, **kwargs):  # noqa: E501
@@ -14750,7 +15550,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14762,7 +15562,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_sections_online(self, request, **kwargs):  # noqa: E501
@@ -14829,7 +15631,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14841,7 +15643,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_signatures(self, request, **kwargs):  # noqa: E501
@@ -14907,7 +15711,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14919,7 +15723,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_signatures_online(self, request, **kwargs):  # noqa: E501
@@ -14986,7 +15792,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -14998,7 +15804,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_structured_document_tag(self, request, **kwargs):  # noqa: E501
@@ -15066,7 +15874,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15078,7 +15886,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_structured_document_tag_online(self, request, **kwargs):  # noqa: E501
@@ -15147,7 +15957,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15159,7 +15969,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_structured_document_tags(self, request, **kwargs):  # noqa: E501
@@ -15226,7 +16038,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15238,7 +16050,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_structured_document_tags_online(self, request, **kwargs):  # noqa: E501
@@ -15306,7 +16120,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15318,7 +16132,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_style(self, request, **kwargs):  # noqa: E501
@@ -15385,7 +16201,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15397,7 +16213,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_style_from_document_element(self, request, **kwargs):  # noqa: E501
@@ -15464,7 +16282,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15476,7 +16294,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_style_from_document_element_online(self, request, **kwargs):  # noqa: E501
@@ -15544,7 +16364,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15556,7 +16376,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_style_online(self, request, **kwargs):  # noqa: E501
@@ -15624,7 +16446,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15636,7 +16458,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_styles(self, request, **kwargs):  # noqa: E501
@@ -15702,7 +16526,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15714,7 +16538,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_styles_online(self, request, **kwargs):  # noqa: E501
@@ -15781,7 +16607,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15793,7 +16619,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table(self, request, **kwargs):  # noqa: E501
@@ -15861,7 +16689,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15873,7 +16701,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_cell(self, request, **kwargs):  # noqa: E501
@@ -15941,7 +16771,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -15953,7 +16783,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_cell_format(self, request, **kwargs):  # noqa: E501
@@ -16021,7 +16853,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16033,7 +16865,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_cell_format_online(self, request, **kwargs):  # noqa: E501
@@ -16102,7 +16936,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16114,7 +16948,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_cell_online(self, request, **kwargs):  # noqa: E501
@@ -16183,7 +17019,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16195,7 +17031,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_online(self, request, **kwargs):  # noqa: E501
@@ -16264,7 +17102,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16276,7 +17114,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_properties(self, request, **kwargs):  # noqa: E501
@@ -16344,7 +17184,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16356,7 +17196,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_properties_online(self, request, **kwargs):  # noqa: E501
@@ -16425,7 +17267,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16437,7 +17279,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_row(self, request, **kwargs):  # noqa: E501
@@ -16505,7 +17349,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16517,7 +17361,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_row_format(self, request, **kwargs):  # noqa: E501
@@ -16585,7 +17431,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16597,7 +17443,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_row_format_online(self, request, **kwargs):  # noqa: E501
@@ -16666,7 +17514,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16678,7 +17526,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_table_row_online(self, request, **kwargs):  # noqa: E501
@@ -16747,7 +17597,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16759,7 +17609,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_tables(self, request, **kwargs):  # noqa: E501
@@ -16826,7 +17678,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16838,7 +17690,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def get_tables_online(self, request, **kwargs):  # noqa: E501
@@ -16906,7 +17760,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -16918,7 +17772,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_bookmark(self, request, **kwargs):  # noqa: E501
@@ -16991,7 +17847,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17003,7 +17859,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_bookmark_online(self, request, **kwargs):  # noqa: E501
@@ -17074,7 +17932,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17086,7 +17944,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_comment(self, request, **kwargs):  # noqa: E501
@@ -17159,7 +18019,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17171,7 +18031,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_comment_online(self, request, **kwargs):  # noqa: E501
@@ -17242,7 +18104,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17254,7 +18116,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_custom_xml_part(self, request, **kwargs):  # noqa: E501
@@ -17327,7 +18191,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17339,7 +18203,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_custom_xml_part_online(self, request, **kwargs):  # noqa: E501
@@ -17410,7 +18276,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17422,7 +18288,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_drawing_object(self, request, **kwargs):  # noqa: E501
@@ -17497,7 +18365,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17509,7 +18377,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_drawing_object_online(self, request, **kwargs):  # noqa: E501
@@ -17582,7 +18452,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17594,7 +18464,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_field(self, request, **kwargs):  # noqa: E501
@@ -17668,7 +18540,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17680,7 +18552,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_field_online(self, request, **kwargs):  # noqa: E501
@@ -17752,7 +18626,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17764,7 +18638,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_footnote(self, request, **kwargs):  # noqa: E501
@@ -17838,7 +18714,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17850,7 +18726,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_footnote_online(self, request, **kwargs):  # noqa: E501
@@ -17922,7 +18800,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -17934,7 +18812,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_form_field(self, request, **kwargs):  # noqa: E501
@@ -18009,7 +18889,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18021,7 +18901,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_form_field_online(self, request, **kwargs):  # noqa: E501
@@ -18094,7 +18976,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18106,7 +18988,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_header_footer(self, request, **kwargs):  # noqa: E501
@@ -18180,7 +19064,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18192,7 +19076,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_header_footer_online(self, request, **kwargs):  # noqa: E501
@@ -18264,7 +19150,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18276,7 +19162,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_list(self, request, **kwargs):  # noqa: E501
@@ -18349,7 +19237,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18361,7 +19249,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_list_online(self, request, **kwargs):  # noqa: E501
@@ -18432,7 +19322,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18444,7 +19334,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_or_update_paragraph_tab_stop(self, request, **kwargs):  # noqa: E501
@@ -18517,7 +19409,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18529,7 +19421,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_or_update_paragraph_tab_stop_online(self, request, **kwargs):  # noqa: E501
@@ -18600,7 +19494,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18612,7 +19506,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_page_numbers(self, request, **kwargs):  # noqa: E501
@@ -18685,7 +19581,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18697,7 +19593,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_page_numbers_online(self, request, **kwargs):  # noqa: E501
@@ -18768,7 +19666,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18780,7 +19678,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_paragraph(self, request, **kwargs):  # noqa: E501
@@ -18854,7 +19754,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18866,7 +19766,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_paragraph_online(self, request, **kwargs):  # noqa: E501
@@ -18938,7 +19840,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -18950,7 +19852,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_run(self, request, **kwargs):  # noqa: E501
@@ -19024,7 +19928,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19036,7 +19940,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_run_online(self, request, **kwargs):  # noqa: E501
@@ -19108,7 +20014,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19120,7 +20026,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_section(self, request, **kwargs):  # noqa: E501
@@ -19190,7 +20098,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19202,7 +20110,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_section_online(self, request, **kwargs):  # noqa: E501
@@ -19273,7 +20183,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19285,7 +20195,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_structured_document_tag(self, request, **kwargs):  # noqa: E501
@@ -19359,7 +20271,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19371,7 +20283,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_structured_document_tag_online(self, request, **kwargs):  # noqa: E501
@@ -19443,7 +20357,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19455,7 +20369,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_style(self, request, **kwargs):  # noqa: E501
@@ -19528,7 +20444,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19540,7 +20456,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_style_online(self, request, **kwargs):  # noqa: E501
@@ -19611,7 +20529,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19623,7 +20541,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table(self, request, **kwargs):  # noqa: E501
@@ -19697,7 +20617,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19709,7 +20629,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table_cell(self, request, **kwargs):  # noqa: E501
@@ -19783,7 +20705,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19795,7 +20717,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table_cell_online(self, request, **kwargs):  # noqa: E501
@@ -19867,7 +20791,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19879,7 +20803,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table_online(self, request, **kwargs):  # noqa: E501
@@ -19951,7 +20877,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -19963,7 +20889,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table_row(self, request, **kwargs):  # noqa: E501
@@ -20037,7 +20965,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20049,7 +20977,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_table_row_online(self, request, **kwargs):  # noqa: E501
@@ -20121,7 +21051,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20133,7 +21063,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_watermark(self, request, **kwargs):  # noqa: E501
@@ -20206,7 +21138,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20218,7 +21150,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation is deprecated and is used for backward compatibility only. Please use InsertWatermark instead.")
     def insert_watermark_image(self, request, **kwargs):  # noqa: E501
@@ -20294,7 +21228,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20306,7 +21240,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation is deprecated and is used for backward compatibility only. Please use InsertWatermark instead.")
     def insert_watermark_image_online(self, request, **kwargs):  # noqa: E501
@@ -20380,7 +21316,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20392,7 +21328,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def insert_watermark_online(self, request, **kwargs):  # noqa: E501
@@ -20463,7 +21401,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20475,7 +21413,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation is deprecated and is used for backward compatibility only. Please use InsertWatermark instead.")
     def insert_watermark_text(self, request, **kwargs):  # noqa: E501
@@ -20549,7 +21489,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20561,7 +21501,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation is deprecated and is used for backward compatibility only. Please use InsertWatermark instead.")
     def insert_watermark_text_online(self, request, **kwargs):  # noqa: E501
@@ -20633,7 +21575,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20645,7 +21587,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def link_header_footers_to_previous(self, request, **kwargs):  # noqa: E501
@@ -20716,7 +21660,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20728,7 +21672,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def load_web_document(self, request, **kwargs):  # noqa: E501
@@ -20792,7 +21738,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20804,7 +21750,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def load_web_document_online(self, request, **kwargs):  # noqa: E501
@@ -20867,7 +21815,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20879,7 +21827,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def merge_with_next(self, request, **kwargs):  # noqa: E501
@@ -20949,7 +21899,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -20961,7 +21911,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def merge_with_next_online(self, request, **kwargs):  # noqa: E501
@@ -21032,7 +21984,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21044,7 +21996,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def move_file(self, request, **kwargs):  # noqa: E501
@@ -21108,7 +22062,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21120,7 +22074,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def move_folder(self, request, **kwargs):  # noqa: E501
@@ -21183,7 +22139,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21195,7 +22151,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def optimize_document(self, request, **kwargs):  # noqa: E501
@@ -21268,7 +22226,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21280,7 +22238,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def optimize_document_online(self, request, **kwargs):  # noqa: E501
@@ -21351,7 +22311,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21363,7 +22323,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def protect_document(self, request, **kwargs):  # noqa: E501
@@ -21434,7 +22396,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21446,7 +22408,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def protect_document_online(self, request, **kwargs):  # noqa: E501
@@ -21515,7 +22479,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21527,7 +22491,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def reject_all_revisions(self, request, **kwargs):  # noqa: E501
@@ -21594,7 +22560,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21606,7 +22572,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def reject_all_revisions_online(self, request, **kwargs):  # noqa: E501
@@ -21674,7 +22642,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21686,7 +22654,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def remove_all_signatures(self, request, **kwargs):  # noqa: E501
@@ -21753,7 +22723,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21765,7 +22735,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def remove_all_signatures_online(self, request, **kwargs):  # noqa: E501
@@ -21833,7 +22805,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21845,7 +22817,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def remove_range(self, request, **kwargs):  # noqa: E501
@@ -21914,7 +22888,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -21926,7 +22900,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def remove_range_online(self, request, **kwargs):  # noqa: E501
@@ -21996,7 +22972,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22008,7 +22984,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_drawing_object(self, request, **kwargs):  # noqa: E501
@@ -22079,7 +23057,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22091,7 +23069,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_drawing_object_online(self, request, **kwargs):  # noqa: E501
@@ -22163,7 +23143,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22175,7 +23155,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_math_object(self, request, **kwargs):  # noqa: E501
@@ -22246,7 +23228,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22258,7 +23240,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_math_object_online(self, request, **kwargs):  # noqa: E501
@@ -22330,7 +23314,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22342,7 +23326,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_page(self, request, **kwargs):  # noqa: E501
@@ -22411,7 +23397,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22423,7 +23409,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_page_online(self, request, **kwargs):  # noqa: E501
@@ -22493,7 +23481,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22505,7 +23493,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_paragraph(self, request, **kwargs):  # noqa: E501
@@ -22576,7 +23566,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22588,7 +23578,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_paragraph_online(self, request, **kwargs):  # noqa: E501
@@ -22660,7 +23652,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22672,7 +23664,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_table(self, request, **kwargs):  # noqa: E501
@@ -22743,7 +23737,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22755,7 +23749,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def render_table_online(self, request, **kwargs):  # noqa: E501
@@ -22827,7 +23823,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22839,7 +23835,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def replace_text(self, request, **kwargs):  # noqa: E501
@@ -22912,7 +23910,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -22924,7 +23922,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def replace_text_online(self, request, **kwargs):  # noqa: E501
@@ -22995,7 +23995,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23007,7 +24007,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def replace_with_text(self, request, **kwargs):  # noqa: E501
@@ -23080,7 +24082,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23092,7 +24094,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def replace_with_text_online(self, request, **kwargs):  # noqa: E501
@@ -23163,7 +24167,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23175,7 +24179,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def reset_cache(self, request, **kwargs):  # noqa: E501
@@ -23234,7 +24240,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23246,7 +24252,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def save_as(self, request, **kwargs):  # noqa: E501
@@ -23317,7 +24325,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23329,7 +24337,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def save_as_online(self, request, **kwargs):  # noqa: E501
@@ -23398,7 +24408,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23410,7 +24420,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def save_as_range(self, request, **kwargs):  # noqa: E501
@@ -23482,7 +24494,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23494,7 +24506,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def save_as_range_online(self, request, **kwargs):  # noqa: E501
@@ -23564,7 +24578,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23576,7 +24590,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation will be removed in the future.")
     def save_as_tiff(self, request, **kwargs):  # noqa: E501
@@ -23665,7 +24681,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23677,7 +24693,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     @typing_extensions.deprecated("This operation will be removed in the future.")
     def save_as_tiff_online(self, request, **kwargs):  # noqa: E501
@@ -23764,7 +24782,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23776,7 +24794,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def search(self, request, **kwargs):  # noqa: E501
@@ -23843,7 +24863,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23855,7 +24875,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def search_online(self, request, **kwargs):  # noqa: E501
@@ -23923,7 +24945,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -23935,7 +24957,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def sign_document(self, request, **kwargs):  # noqa: E501
@@ -24004,7 +25028,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24016,7 +25040,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def sign_document_online(self, request, **kwargs):  # noqa: E501
@@ -24086,7 +25112,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24098,7 +25124,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def split_document(self, request, **kwargs):  # noqa: E501
@@ -24170,7 +25198,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24182,7 +25210,96 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def split_document_job(self, request, **kwargs):  # noqa: E501
+        """Splits a document into parts and saves them in the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param name str : The filename of the input document. (required)
+        :param format str : The format to split. (required)
+        :param folder str : Original document folder.
+        :param storage str : Original document storage.
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param dest_file_name str : Result path of the document after the operation. If this parameter is omitted then result of the operation will be saved as the source document.
+        :param _from int : The start page.
+        :param to int : The end page.
+        :param zip_output bool : The flag indicating whether to ZIP the output.
+        :param fonts_location str : Folder in filestorage with custom fonts.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.split_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.split_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.split_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.split_document_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def split_document_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Splits a document into parts and saves them in the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request SplitDocumentJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method split_document_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def split_document_online(self, request, **kwargs):  # noqa: E501
@@ -24255,7 +25372,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24267,7 +25384,97 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
+
+
+    def split_document_online_job(self, request, **kwargs):  # noqa: E501
+        """Splits a document into parts and saves them in the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param document file : The document. (required)
+        :param format str : The format to split. (required)
+        :param load_encoding str : Encoding that will be used to load an HTML (or TXT) document if the encoding is not specified in HTML.
+        :param password str : Password of protected Word document. Use the parameter to pass a password via SDK. SDK encrypts it automatically. We don't recommend to use the parameter to pass a plain password for direct call of API.
+        :param encrypted_password str : Password of protected Word document. Use the parameter to pass an encrypted password for direct calls of API. See SDK code for encyption details.
+        :param open_type_support bool : The value indicates whether OpenType support is on.
+        :param dest_file_name str : Result path of the document after the operation. If this parameter is omitted then result of the operation will be saved as the source document.
+        :param _from int : The start page.
+        :param to int : The end page.
+        :param zip_output bool : The flag indicating whether to ZIP the output.
+        :param fonts_location str : Folder in filestorage with custom fonts.
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        try:
+            if kwargs.get('is_async'):
+                return self.split_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.split_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        except ApiException as e:
+            if e.status == 401:
+                self.api_client.request_token()
+                if kwargs.get('is_async'):
+                    return self.split_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            data = self.split_document_online_job_with_http_info(request, **kwargs)  # noqa: E501
+            return data
+        
+    def split_document_online_job_with_http_info(self, request, **kwargs):  # noqa: E501
+        """Splits a document into parts and saves them in the specified format.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass is_async=True
+
+        :param is_async bool
+        :param request SplitDocumentOnlineJobRequest object with parameters
+        :return: JobHandler
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        params = locals()
+        params['is_async'] = ''
+        params['_preload_content'] = True
+        params['_request_timeout'] = self.timeout
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method split_document_online_job" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        http_params = request.create_http_request(self.api_client, self)
+
+        # HTTP header `Accept`
+        http_params['header_params']['Accept'] = self.api_client.select_header_accept(
+            ['application/xml', 'application/json'])  # noqa: E501
+        # Authentication setting
+        auth_settings = ['JWT']  # noqa: E501
+
+        self.api_client.handle_password(http_params, self)
+
+        response = self.api_client.call_api(
+            http_params['path'],
+            http_params['method'],
+            http_params['query_params'],
+            http_params['header_params'],
+            body=None,
+            post_params=http_params['form_params'],
+            response_type=http_params['response_type'],  # noqa: E501
+            auth_settings=auth_settings,
+            is_async=params.get('is_async'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=http_params['collection_formats'])
+        job_info = self.api_client.deserialize(response.data, response.getheaders(), 'JobInfo')
+        return JobHandler(self, request.get_original_request(), job_info)
+
 
 
     def translate_node_id(self, request, **kwargs):  # noqa: E501
@@ -24334,7 +25541,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24346,7 +25553,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def translate_node_id_online(self, request, **kwargs):  # noqa: E501
@@ -24414,7 +25623,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24426,7 +25635,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def unprotect_document(self, request, **kwargs):  # noqa: E501
@@ -24493,7 +25704,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24505,7 +25716,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def unprotect_document_online(self, request, **kwargs):  # noqa: E501
@@ -24573,7 +25786,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24585,7 +25798,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_bookmark(self, request, **kwargs):  # noqa: E501
@@ -24659,7 +25874,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24671,7 +25886,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_bookmark_online(self, request, **kwargs):  # noqa: E501
@@ -24743,7 +25960,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24755,7 +25972,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_border(self, request, **kwargs):  # noqa: E501
@@ -24830,7 +26049,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24842,7 +26061,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_border_online(self, request, **kwargs):  # noqa: E501
@@ -24915,7 +26136,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -24927,7 +26148,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_comment(self, request, **kwargs):  # noqa: E501
@@ -25001,7 +26224,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25013,7 +26236,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_comment_online(self, request, **kwargs):  # noqa: E501
@@ -25085,7 +26310,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25097,7 +26322,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_custom_xml_part(self, request, **kwargs):  # noqa: E501
@@ -25171,7 +26398,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25183,7 +26410,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_custom_xml_part_online(self, request, **kwargs):  # noqa: E501
@@ -25255,7 +26484,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25267,7 +26496,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_drawing_object(self, request, **kwargs):  # noqa: E501
@@ -25343,7 +26574,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25355,7 +26586,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_drawing_object_online(self, request, **kwargs):  # noqa: E501
@@ -25429,7 +26662,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25441,7 +26674,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_field(self, request, **kwargs):  # noqa: E501
@@ -25516,7 +26751,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25528,7 +26763,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_field_online(self, request, **kwargs):  # noqa: E501
@@ -25601,7 +26838,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25613,7 +26850,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_fields(self, request, **kwargs):  # noqa: E501
@@ -25680,7 +26919,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25692,7 +26931,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_fields_online(self, request, **kwargs):  # noqa: E501
@@ -25760,7 +27001,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25772,7 +27013,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_footnote(self, request, **kwargs):  # noqa: E501
@@ -25847,7 +27090,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25859,7 +27102,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_footnote_online(self, request, **kwargs):  # noqa: E501
@@ -25932,7 +27177,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -25944,7 +27189,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_form_field(self, request, **kwargs):  # noqa: E501
@@ -26019,7 +27266,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26031,7 +27278,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_form_field_online(self, request, **kwargs):  # noqa: E501
@@ -26104,7 +27353,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26116,7 +27365,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_list(self, request, **kwargs):  # noqa: E501
@@ -26190,7 +27441,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26202,7 +27453,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_list_level(self, request, **kwargs):  # noqa: E501
@@ -26277,7 +27530,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26289,7 +27542,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_list_level_online(self, request, **kwargs):  # noqa: E501
@@ -26362,7 +27617,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26374,7 +27629,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_list_online(self, request, **kwargs):  # noqa: E501
@@ -26446,7 +27703,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26458,7 +27715,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_paragraph_format(self, request, **kwargs):  # noqa: E501
@@ -26533,7 +27792,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26545,7 +27804,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_paragraph_format_online(self, request, **kwargs):  # noqa: E501
@@ -26618,7 +27879,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26630,7 +27891,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_paragraph_list_format(self, request, **kwargs):  # noqa: E501
@@ -26705,7 +27968,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26717,7 +27980,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_paragraph_list_format_online(self, request, **kwargs):  # noqa: E501
@@ -26790,7 +28055,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26802,7 +28067,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_run(self, request, **kwargs):  # noqa: E501
@@ -26877,7 +28144,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26889,7 +28156,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_run_font(self, request, **kwargs):  # noqa: E501
@@ -26964,7 +28233,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -26976,7 +28245,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_run_font_online(self, request, **kwargs):  # noqa: E501
@@ -27049,7 +28320,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27061,7 +28332,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_run_online(self, request, **kwargs):  # noqa: E501
@@ -27134,7 +28407,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27146,7 +28419,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_section_page_setup(self, request, **kwargs):  # noqa: E501
@@ -27220,7 +28495,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27232,7 +28507,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_section_page_setup_online(self, request, **kwargs):  # noqa: E501
@@ -27304,7 +28581,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27316,7 +28593,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_structured_document_tag(self, request, **kwargs):  # noqa: E501
@@ -27391,7 +28670,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27403,7 +28682,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_structured_document_tag_online(self, request, **kwargs):  # noqa: E501
@@ -27476,7 +28757,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27488,7 +28769,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_style(self, request, **kwargs):  # noqa: E501
@@ -27562,7 +28845,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27574,7 +28857,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_style_online(self, request, **kwargs):  # noqa: E501
@@ -27646,7 +28931,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27658,7 +28943,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_cell_format(self, request, **kwargs):  # noqa: E501
@@ -27733,7 +29020,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27745,7 +29032,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_cell_format_online(self, request, **kwargs):  # noqa: E501
@@ -27818,7 +29107,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27830,7 +29119,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_properties(self, request, **kwargs):  # noqa: E501
@@ -27905,7 +29196,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -27917,7 +29208,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_properties_online(self, request, **kwargs):  # noqa: E501
@@ -27990,7 +29283,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -28002,7 +29295,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_row_format(self, request, **kwargs):  # noqa: E501
@@ -28077,7 +29372,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -28089,7 +29384,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def update_table_row_format_online(self, request, **kwargs):  # noqa: E501
@@ -28162,7 +29459,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -28174,7 +29471,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
 
     def upload_file(self, request, **kwargs):  # noqa: E501
@@ -28239,7 +29538,7 @@ class WordsApi(Encryptor, object):
 
         self.api_client.handle_password(http_params, self)
 
-        return request.deserialize_response(self.api_client, self.api_client.call_api(
+        response = self.api_client.call_api(
             http_params['path'],
             http_params['method'],
             http_params['query_params'],
@@ -28251,7 +29550,9 @@ class WordsApi(Encryptor, object):
             is_async=params.get('is_async'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
-            collection_formats=http_params['collection_formats']))
+            collection_formats=http_params['collection_formats'])
+        return request.deserialize_response(self.api_client, response)
+
 
     def batch(self, *requests):  # noqa: E501
         return self.batch_with_options(False, *requests)

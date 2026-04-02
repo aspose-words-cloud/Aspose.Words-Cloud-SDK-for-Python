@@ -87,6 +87,9 @@ class SaveAsTiffOnlineRequest(BaseRequestObject):
         self.zip_output = zip_output
         self.fonts_location = fonts_location
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'document' is set
         if self.document is None:

@@ -55,6 +55,9 @@ class GetStyleRequest(BaseRequestObject):
         self.encrypted_password = encrypted_password
         self.open_type_support = open_type_support
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'name' is set
         if self.name is None:

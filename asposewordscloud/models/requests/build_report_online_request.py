@@ -47,6 +47,9 @@ class BuildReportOnlineRequest(BaseRequestObject):
         self.report_engine_settings = report_engine_settings
         self.document_file_name = document_file_name
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'template' is set
         if self.template is None:

@@ -45,7 +45,7 @@ class TestCompatibility(BaseTestContext):
         request_options = asposewordscloud.OptimizationOptions(ms_word_version='Word2002')
         request = asposewordscloud.models.requests.OptimizeDocumentRequest(name=remote_file_name, options=request_options, folder=remote_data_folder)
 
-        self.words_api.optimize_document(request)
+         self.words_api.optimize_document(request)
 
 
     #

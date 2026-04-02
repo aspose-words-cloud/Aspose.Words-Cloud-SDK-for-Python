@@ -40,7 +40,7 @@ class TestFolder(BaseTestContext):
 
         request = asposewordscloud.models.requests.CreateFolderRequest(path=remote_data_folder + '/TestCreateFolder')
 
-        self.words_api.create_folder(request)
+         self.words_api.create_folder(request)
 
 
     #
@@ -55,7 +55,7 @@ class TestFolder(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFolderRequest(path=test_delete_folder, recursive=True)
 
-        self.words_api.delete_folder(request)
+         self.words_api.delete_folder(request)
 
 
     #
@@ -82,7 +82,7 @@ class TestFolder(BaseTestContext):
 
         request = asposewordscloud.models.requests.CopyFolderRequest(dest_path=folder_to_copy + 'Dest', src_path=folder_to_copy + 'Src')
 
-        self.words_api.copy_folder(request)
+         self.words_api.copy_folder(request)
 
 
     #
@@ -96,5 +96,5 @@ class TestFolder(BaseTestContext):
 
         request = asposewordscloud.models.requests.MoveFolderRequest(dest_path=self.remote_test_out + '/TestMoveFolderDest_' + self.create_random_guid(), src_path=remote_data_folder + '/TestMoveFolderSrc')
 
-        self.words_api.move_folder(request)
+         self.words_api.move_folder(request)
 

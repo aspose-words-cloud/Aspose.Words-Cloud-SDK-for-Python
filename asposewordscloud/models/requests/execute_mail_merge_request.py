@@ -69,6 +69,9 @@ class ExecuteMailMergeRequest(BaseRequestObject):
         self.merge_whole_document = merge_whole_document
         self.dest_file_name = dest_file_name
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'name' is set
         if self.name is None:

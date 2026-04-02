@@ -49,6 +49,22 @@ class TestExecuteMailMerge(BaseTestContext):
 
 
     #
+    # Test for executing mail merge online job.
+    #
+    def test_execute_mail_merge_online_job(self):
+        mail_merge_folder = 'DocumentActions/MailMerge'
+        local_document_file = 'SampleExecuteTemplate.docx'
+        local_data_file = 'SampleExecuteTemplateData.txt'
+
+        request_template = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
+        request_data = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_data_file), 'rb')
+        request = asposewordscloud.models.requests.ExecuteMailMergeOnlineJobRequest(template=request_template, data=request_data, with_regions=True)
+
+        job_handler = self.words_api.execute_mail_merge_online_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
+
+
+    #
     # Test for executing mail merge.
     #
     def test_execute_mail_merge(self):
@@ -65,4 +81,24 @@ class TestExecuteMailMerge(BaseTestContext):
         result = self.words_api.execute_mail_merge(request)
         self.assertIsNotNone(result, 'Error has occurred.')
         self.assertIsNotNone(result.document, 'Validate ExecuteMailMerge response')
+        self.assertEqual('TestExecuteMailMerge.docx', result.document.file_name)
+
+    #
+    # Test for executing mail merge job.
+    #
+    def test_execute_mail_merge_job(self):
+        remote_data_folder = self.remote_test_folder + '/DocumentActions/MailMerge'
+        mail_merge_folder = 'DocumentActions/MailMerge'
+        local_document_file = 'SampleExecuteTemplate.docx'
+        remote_file_name = 'TestExecuteMailMerge.docx'
+        local_data_file = open(os.path.join(self.local_test_folder, mail_merge_folder + '/SampleMailMergeTemplateData.txt')).read()
+
+        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb'))
+
+        request = asposewordscloud.models.requests.ExecuteMailMergeJobRequest(name=remote_file_name, data=local_data_file, folder=remote_data_folder, with_regions=True, dest_file_name=self.remote_test_out + '/' + remote_file_name)
+
+        job_handler = self.words_api.execute_mail_merge_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
+        result = job_handler.wait_result(3)
+        self.assertIsNotNone(result.document, 'Validate ExecuteMailMergeJob response')
         self.assertEqual('TestExecuteMailMerge.docx', result.document.file_name)

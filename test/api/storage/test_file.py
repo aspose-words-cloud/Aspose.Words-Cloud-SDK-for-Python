@@ -61,7 +61,7 @@ class TestFile(BaseTestContext):
 
         request = asposewordscloud.models.requests.CopyFileRequest(dest_path=remote_data_folder + '/TestCopyFileDest.docx', src_path=remote_data_folder + '/' + remote_file_name)
 
-        self.words_api.copy_file(request)
+         self.words_api.copy_file(request)
 
 
     #
@@ -76,7 +76,7 @@ class TestFile(BaseTestContext):
 
         request = asposewordscloud.models.requests.MoveFileRequest(dest_path=self.remote_test_out + '/TestMoveFileDest_' + self.create_random_guid() + '.docx', src_path=remote_data_folder + '/' + remote_file_name)
 
-        self.words_api.move_file(request)
+         self.words_api.move_file(request)
 
 
     #
@@ -91,7 +91,7 @@ class TestFile(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFileRequest(path=remote_data_folder + '/' + remote_file_name)
 
-        self.words_api.delete_file(request)
+         self.words_api.delete_file(request)
 
 
     #

@@ -108,7 +108,7 @@ class TestSection(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteSectionRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
-        self.words_api.delete_section(request)
+         self.words_api.delete_section(request)
 
 
     #
@@ -135,7 +135,7 @@ class TestSection(BaseTestContext):
 
         request = asposewordscloud.models.requests.MergeWithNextRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
-        self.words_api.merge_with_next(request)
+         self.words_api.merge_with_next(request)
 
 
     #
@@ -161,7 +161,7 @@ class TestSection(BaseTestContext):
 
         request = asposewordscloud.models.requests.InsertSectionRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
-        self.words_api.insert_section(request)
+         self.words_api.insert_section(request)
 
 
     #
@@ -188,5 +188,5 @@ class TestSection(BaseTestContext):
 
         request = asposewordscloud.models.requests.LinkHeaderFootersToPreviousRequest(name=remote_file_name, section_index=1, folder=remote_data_folder)
 
-        self.words_api.link_header_footers_to_previous(request)
+         self.words_api.link_header_footers_to_previous(request)
 

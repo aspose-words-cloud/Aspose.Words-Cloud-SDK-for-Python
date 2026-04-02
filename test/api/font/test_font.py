@@ -38,7 +38,7 @@ class TestFont(BaseTestContext):
     def test_reset_cache(self):
         request = asposewordscloud.models.requests.ResetCacheRequest()
 
-        self.words_api.reset_cache(request)
+         self.words_api.reset_cache(request)
 
 
     #

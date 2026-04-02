@@ -140,7 +140,7 @@ class TestBookmark(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteBookmarkRequest(name=remote_file_name, bookmark_name=bookmark_name, folder=remote_data_folder)
 
-        self.words_api.delete_bookmark(request)
+         self.words_api.delete_bookmark(request)
 
 
     #
@@ -169,7 +169,7 @@ class TestBookmark(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteBookmarksRequest(name=remote_file_name, folder=remote_data_folder)
 
-        self.words_api.delete_bookmarks(request)
+         self.words_api.delete_bookmarks(request)
 
 
     #
