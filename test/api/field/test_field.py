@@ -267,7 +267,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldRequest(name=remote_file_name, index=0, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
-         self.words_api.delete_field(request)
+        self.words_api.delete_field(request)
 
 
     #
@@ -296,7 +296,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
-         self.words_api.delete_field(request)
+        self.words_api.delete_field(request)
 
 
     #
@@ -311,7 +311,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='paragraphs/0', folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #
@@ -326,7 +326,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #
@@ -341,7 +341,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='sections/0', folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #
@@ -356,7 +356,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #
@@ -371,7 +371,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #
@@ -386,7 +386,7 @@ class TestField(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='', folder=remote_data_folder)
 
-         self.words_api.delete_fields(request)
+        self.words_api.delete_fields(request)
 
 
     #

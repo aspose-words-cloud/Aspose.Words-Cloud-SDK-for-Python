@@ -184,7 +184,7 @@ class TestCustomXmlParts(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteCustomXmlPartRequest(name=remote_file_name, custom_xml_part_index=0, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-         self.words_api.delete_custom_xml_part(request)
+        self.words_api.delete_custom_xml_part(request)
 
 
     #
@@ -212,7 +212,7 @@ class TestCustomXmlParts(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteCustomXmlPartsRequest(name=remote_file_name, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-         self.words_api.delete_custom_xml_parts(request)
+        self.words_api.delete_custom_xml_parts(request)
 
 
     #

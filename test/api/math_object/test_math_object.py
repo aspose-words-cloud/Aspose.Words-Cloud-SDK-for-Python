@@ -187,7 +187,7 @@ class TestMathObject(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteOfficeMathObjectRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
-         self.words_api.delete_office_math_object(request)
+        self.words_api.delete_office_math_object(request)
 
 
     #
@@ -215,7 +215,7 @@ class TestMathObject(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteOfficeMathObjectRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
-         self.words_api.delete_office_math_object(request)
+        self.words_api.delete_office_math_object(request)
 
 
     #
@@ -230,7 +230,7 @@ class TestMathObject(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteOfficeMathObjectsRequest(name=remote_file_name, folder=remote_data_folder)
 
-         self.words_api.delete_office_math_objects(request)
+        self.words_api.delete_office_math_objects(request)
 
 
     #

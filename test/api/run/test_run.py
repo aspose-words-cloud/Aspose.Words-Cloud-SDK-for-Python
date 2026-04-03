@@ -109,7 +109,7 @@ class TestRun(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteRunRequest(name=remote_file_name, paragraph_path='paragraphs/1', index=0, folder=remote_data_folder)
 
-         self.words_api.delete_run(request)
+        self.words_api.delete_run(request)
 
 
     #

@@ -440,7 +440,7 @@ class TestParagraph(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteParagraphRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
-         self.words_api.delete_paragraph(request)
+        self.words_api.delete_paragraph(request)
 
 
     #
@@ -468,7 +468,7 @@ class TestParagraph(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteParagraphRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
-         self.words_api.delete_paragraph(request)
+        self.words_api.delete_paragraph(request)
 
 
     #

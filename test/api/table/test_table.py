@@ -148,7 +148,7 @@ class TestTable(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteTableRequest(name=remote_file_name, index=1, node_path='', folder=remote_data_folder)
 
-         self.words_api.delete_table(request)
+        self.words_api.delete_table(request)
 
 
     #
@@ -176,7 +176,7 @@ class TestTable(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteTableRequest(name=remote_file_name, index=1, folder=remote_data_folder)
 
-         self.words_api.delete_table(request)
+        self.words_api.delete_table(request)
 
 
     #
@@ -381,7 +381,7 @@ class TestTable(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteTableRowRequest(name=remote_file_name, table_path='tables/1', index=0, folder=remote_data_folder)
 
-         self.words_api.delete_table_row(request)
+        self.words_api.delete_table_row(request)
 
 
     #
@@ -536,7 +536,7 @@ class TestTable(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteTableCellRequest(name=remote_file_name, table_row_path='sections/0/tables/2/rows/0', index=0, folder=remote_data_folder)
 
-         self.words_api.delete_table_cell(request)
+        self.words_api.delete_table_cell(request)
 
 
     #

@@ -133,7 +133,7 @@ class TestStructuredDocumentTag(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteStructuredDocumentTagRequest(name=remote_file_name, index=0, node_path='sections/0/body/paragraphs/0', folder=remote_data_folder)
 
-         self.words_api.delete_structured_document_tag(request)
+        self.words_api.delete_structured_document_tag(request)
 
 
     #

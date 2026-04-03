@@ -184,7 +184,7 @@ class TestComment(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteCommentRequest(name=remote_file_name, comment_index=0, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-         self.words_api.delete_comment(request)
+        self.words_api.delete_comment(request)
 
 
     #
@@ -212,7 +212,7 @@ class TestComment(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteCommentsRequest(name=remote_file_name, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-         self.words_api.delete_comments(request)
+        self.words_api.delete_comments(request)
 
 
     #

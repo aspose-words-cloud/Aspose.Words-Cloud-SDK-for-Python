@@ -44,7 +44,7 @@ class TestMacros(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteMacrosRequest(name=remote_file_name, folder=remote_data_folder)
 
-         self.words_api.delete_macros(request)
+        self.words_api.delete_macros(request)
 
 
     #

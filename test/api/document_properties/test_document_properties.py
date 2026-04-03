@@ -109,7 +109,7 @@ class TestDocumentProperties(BaseTestContext):
 
         request = asposewordscloud.models.requests.DeleteDocumentPropertyRequest(name=remote_file_name, property_name='testProp', folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
-         self.words_api.delete_document_property(request)
+        self.words_api.delete_document_property(request)
 
 
     #
