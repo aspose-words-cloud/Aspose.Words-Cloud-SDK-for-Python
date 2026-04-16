@@ -141,3 +141,16 @@ class TestConvertDocument(BaseTestContext):
         result = self.words_api.convert_document(request)
         self.assertIsNotNone(result, 'Error has occurred.')
 
+
+    #
+    # A test for ConvertDocument as a job.
+    #
+    def test_convert_document_job(self):
+        local_folder = 'DocumentActions/ConvertDocument'
+
+        request_document = open(os.path.join(self.local_test_folder, local_folder + '/test_uploadfile.docx'), 'rb')
+        request = asposewordscloud.models.requests.ConvertDocumentJobRequest(document=request_document, format='pdf')
+
+        job_handler = self.words_api.convert_document_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
+

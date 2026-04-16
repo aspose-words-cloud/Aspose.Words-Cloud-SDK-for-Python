@@ -45,6 +45,9 @@ class CreateDocumentRequest(BaseRequestObject):
         self.folder = folder
         self.storage = storage
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'file_name' is set
         if self.file_name is None:

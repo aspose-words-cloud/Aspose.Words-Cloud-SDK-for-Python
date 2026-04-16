@@ -47,6 +47,9 @@ class CopyFolderRequest(BaseRequestObject):
         self.src_storage_name = src_storage_name
         self.dest_storage_name = dest_storage_name
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'dest_path' is set
         if self.dest_path is None:

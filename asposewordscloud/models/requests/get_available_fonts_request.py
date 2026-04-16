@@ -41,6 +41,9 @@ class GetAvailableFontsRequest(BaseRequestObject):
     def __init__(self, fonts_location=None):
         self.fonts_location = fonts_location
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
 
         path = '/v4.0/words/fonts/available'

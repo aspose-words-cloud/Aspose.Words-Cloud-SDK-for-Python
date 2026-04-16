@@ -39,6 +39,9 @@ class GetPublicKeyRequest(BaseRequestObject):
 
     def __init__(self):
         pass
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
 
         path = '/v4.0/words/encryption/publickey'

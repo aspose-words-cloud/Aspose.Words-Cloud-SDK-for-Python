@@ -51,6 +51,9 @@ class GetDocumentFieldNamesOnlineRequest(BaseRequestObject):
         self.open_type_support = open_type_support
         self.use_non_merge_fields = use_non_merge_fields
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'template' is set
         if self.template is None:

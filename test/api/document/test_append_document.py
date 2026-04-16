@@ -54,6 +54,28 @@ class TestAppendDocument(BaseTestContext):
         self.assertEqual('TestAppendDocument.docx', result.document.file_name)
 
     #
+    # Test for appending document job.
+    #
+    def test_append_document_job(self):
+        remote_data_folder = self.remote_test_folder + '/DocumentActions/AppendDocument'
+        local_file = 'Common/test_multi_pages.docx'
+        remote_file_name = 'TestAppendDocument.docx'
+
+        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+
+        request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_data_folder + '/' + remote_file_name)
+        request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
+        request_document_list_document_entries = [request_document_list_document_entries0]
+        request_document_list = asposewordscloud.DocumentEntryList(document_entries=request_document_list_document_entries)
+        request = asposewordscloud.models.requests.AppendDocumentJobRequest(name=remote_file_name, document_list=request_document_list, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
+
+        job_handler = self.words_api.append_document_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
+        result = job_handler.wait_result(3)
+        self.assertIsNotNone(result.document, 'Validate AppendDocumentJob response')
+        self.assertEqual('TestAppendDocument.docx', result.document.file_name)
+
+    #
     # Test for appending document online.
     #
     def test_append_document_online(self):
@@ -69,4 +91,22 @@ class TestAppendDocument(BaseTestContext):
 
         result = self.words_api.append_document_online(request)
         self.assertIsNotNone(result, 'Error has occurred.')
+
+
+    #
+    # Test for appending document online job.
+    #
+    def test_append_document_online_job(self):
+        local_file = 'Common/test_multi_pages.docx'
+
+        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document_list_document_entries0_file_reference_stream = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromLocalFileContent(request_document_list_document_entries0_file_reference_stream)
+        request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
+        request_document_list_document_entries = [request_document_list_document_entries0]
+        request_document_list = asposewordscloud.DocumentEntryList(document_entries=request_document_list_document_entries)
+        request = asposewordscloud.models.requests.AppendDocumentOnlineJobRequest(document=request_document, document_list=request_document_list)
+
+        job_handler = self.words_api.append_document_online_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
 

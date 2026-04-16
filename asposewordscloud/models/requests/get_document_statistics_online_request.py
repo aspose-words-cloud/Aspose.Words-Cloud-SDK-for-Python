@@ -55,6 +55,9 @@ class GetDocumentStatisticsOnlineRequest(BaseRequestObject):
         self.include_footnotes = include_footnotes
         self.include_text_in_shapes = include_text_in_shapes
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'document' is set
         if self.document is None:

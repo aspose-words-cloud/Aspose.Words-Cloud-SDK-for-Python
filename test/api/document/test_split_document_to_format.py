@@ -51,6 +51,25 @@ class TestSplitDocumentToFormat(BaseTestContext):
         self.assertEqual(2, len(result.split_result.pages))
 
     #
+    # Test for document splitting job.
+    #
+    def test_split_document_job(self):
+        remote_data_folder = self.remote_test_folder + '/DocumentActions/SplitDocument'
+        local_file = 'Common/test_multi_pages.docx'
+        remote_file_name = 'TestSplitDocument.docx'
+
+        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+
+        request = asposewordscloud.models.requests.SplitDocumentJobRequest(name=remote_file_name, format='text', folder=remote_data_folder, dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
+
+        job_handler = self.words_api.split_document_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
+        result = job_handler.wait_result(3)
+        self.assertIsNotNone(result.split_result, 'Validate SplitDocumentJob response')
+        self.assertIsNotNone(result.split_result.pages, 'Validate SplitDocumentJob response')
+        self.assertEqual(2, len(result.split_result.pages))
+
+    #
     # Test for document splitting online.
     #
     def test_split_document_online(self):
@@ -61,4 +80,17 @@ class TestSplitDocumentToFormat(BaseTestContext):
 
         result = self.words_api.split_document_online(request)
         self.assertIsNotNone(result, 'Error has occurred.')
+
+
+    #
+    # Test for document splitting online job.
+    #
+    def test_split_document_online_job(self):
+        local_file = 'Common/test_multi_pages.docx'
+
+        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request = asposewordscloud.models.requests.SplitDocumentOnlineJobRequest(document=request_document, format='text', dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
+
+        job_handler = self.words_api.split_document_online_job(request)
+        self.assertIsNotNone(job_handler, 'Error has occurred.')
 

@@ -41,6 +41,9 @@ class LoadWebDocumentOnlineRequest(BaseRequestObject):
     def __init__(self, data):
         self.data = data
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'data' is set
         if self.data is None:

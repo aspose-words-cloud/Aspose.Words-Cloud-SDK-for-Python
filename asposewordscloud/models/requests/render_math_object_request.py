@@ -63,6 +63,9 @@ class RenderMathObjectRequest(BaseRequestObject):
         self.dest_file_name = dest_file_name
         self.fonts_location = fonts_location
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'name' is set
         if self.name is None:

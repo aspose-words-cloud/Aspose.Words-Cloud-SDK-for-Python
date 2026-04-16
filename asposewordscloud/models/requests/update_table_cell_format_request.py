@@ -65,6 +65,9 @@ class UpdateTableCellFormatRequest(BaseRequestObject):
         self.revision_author = revision_author
         self.revision_date_time = revision_date_time
 
+    def get_original_request(self):
+        return self
+
     def create_http_request(self, api_client, encryptor):
         # verify the required parameter 'name' is set
         if self.name is None:
