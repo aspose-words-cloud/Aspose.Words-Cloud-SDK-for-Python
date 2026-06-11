@@ -361,12 +361,12 @@ class ApiClient(object):
 
         self.pool = None
         self.rest_client = rest.RESTClientObject(configuration)
-        self.default_headers = {'x-aspose-client': 'python sdk', 'x-aspose-client-version': '26.5'}
+        self.default_headers = {'x-aspose-client': 'python sdk', 'x-aspose-client-version': '26.6'}
         if header_name is not None:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'python sdk 26.5'
+        self.user_agent = 'python sdk 26.6'
 
     class HttpPartResponse(object):
         def __init__(self, data, headers, status):
