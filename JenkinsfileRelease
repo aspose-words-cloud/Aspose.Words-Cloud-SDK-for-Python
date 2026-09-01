@@ -42,13 +42,22 @@ def publishToPypi()
 		
 		stage('7: upload to PyPi') {
 			if (params.StartFromStage.toInteger() < 8) {
+				// Root is needed so pip can write to the image's own site-packages, but it leaves
+				// root-owned files in the mounted workspace that cleanWs() cannot delete. Capture the
+				// agent's ids here and hand ownership back before leaving the container.
+				def agentUid = sh(script: 'id -u', returnStdout: true).trim()
+				def agentGid = sh(script: 'id -g', returnStdout: true).trim()
 				docker.image('python:3.6').inside('-u root'){
+					try {
 					sh "python -m pip install --upgrade setuptools wheel"
 					sh "python setup.py sdist bdist_wheel"
 					sh "python -m pip install --upgrade twine python-dateutil"
 					sh "touch ~/.pypirc"
 					sh "echo '[distutils] \\n index-servers= \\n\\t pypi \\n [pypi] \\n username = __token__ \\n password = '$pypiPass'' > ~/.pypirc"
 					sh "python setup.py sdist && twine upload dist/*"
+					} finally {
+						sh "chown -R ${agentUid}:${agentGid} ."
+					}
 				}
 			}
 		}
