@@ -64,6 +64,7 @@ class OpenXpsSaveOptionsData(object):
         'page_count': 'int',
         'page_index': 'int',
         'bookmarks_outline_level': 'int',
+        'compression_level': 'str',
         'digital_signature_details': 'DigitalSignatureDetails',
         'headings_outline_levels': 'int',
         'outline_options': 'OutlineOptionsData',
@@ -93,6 +94,7 @@ class OpenXpsSaveOptionsData(object):
         'page_count': 'PageCount',
         'page_index': 'PageIndex',
         'bookmarks_outline_level': 'BookmarksOutlineLevel',
+        'compression_level': 'CompressionLevel',
         'digital_signature_details': 'DigitalSignatureDetails',
         'headings_outline_levels': 'HeadingsOutlineLevels',
         'outline_options': 'OutlineOptions',
@@ -100,7 +102,7 @@ class OpenXpsSaveOptionsData(object):
         'save_format': 'SaveFormat'
     }
 
-    def __init__(self, allow_embedding_post_script_fonts=None, custom_time_zone_info_data=None, dml3_d_effects_rendering_mode=None, dml_effects_rendering_mode=None, dml_rendering_mode=None, file_name=None, iml_rendering_mode=None, update_ambiguous_text_font=None, update_created_time_property=None, update_fields=None, update_last_printed_property=None, update_last_saved_time_property=None, zip_output=None, color_mode=None, jpeg_quality=None, metafile_rendering_options=None, numeral_format=None, optimize_output=None, page_count=None, page_index=None, bookmarks_outline_level=None, digital_signature_details=None, headings_outline_levels=None, outline_options=None, use_book_fold_printing_settings=None):  # noqa: E501
+    def __init__(self, allow_embedding_post_script_fonts=None, custom_time_zone_info_data=None, dml3_d_effects_rendering_mode=None, dml_effects_rendering_mode=None, dml_rendering_mode=None, file_name=None, iml_rendering_mode=None, update_ambiguous_text_font=None, update_created_time_property=None, update_fields=None, update_last_printed_property=None, update_last_saved_time_property=None, zip_output=None, color_mode=None, jpeg_quality=None, metafile_rendering_options=None, numeral_format=None, optimize_output=None, page_count=None, page_index=None, bookmarks_outline_level=None, compression_level=None, digital_signature_details=None, headings_outline_levels=None, outline_options=None, use_book_fold_printing_settings=None):  # noqa: E501
         """OpenXpsSaveOptionsData - a model defined in Swagger"""  # noqa: E501
 
         self._allow_embedding_post_script_fonts = None
@@ -124,6 +126,7 @@ class OpenXpsSaveOptionsData(object):
         self._page_count = None
         self._page_index = None
         self._bookmarks_outline_level = None
+        self._compression_level = None
         self._digital_signature_details = None
         self._headings_outline_levels = None
         self._outline_options = None
@@ -173,6 +176,8 @@ class OpenXpsSaveOptionsData(object):
             self.page_index = page_index
         if bookmarks_outline_level is not None:
             self.bookmarks_outline_level = bookmarks_outline_level
+        if compression_level is not None:
+            self.compression_level = compression_level
         if digital_signature_details is not None:
             self.digital_signature_details = digital_signature_details
         if headings_outline_levels is not None:
@@ -693,6 +698,36 @@ class OpenXpsSaveOptionsData(object):
         self._bookmarks_outline_level = bookmarks_outline_level
 
     @property
+    def compression_level(self):
+        """Gets the compression_level of this OpenXpsSaveOptionsData.  # noqa: E501
+
+        Gets or sets a compression level used to save document. The default value is Normal.  # noqa: E501
+
+        :return: The compression_level of this OpenXpsSaveOptionsData.  # noqa: E501
+        :rtype: str
+        """
+        return self._compression_level
+
+    @compression_level.setter
+    def compression_level(self, compression_level):
+        """Sets the compression_level of this OpenXpsSaveOptionsData.
+
+        Gets or sets a compression level used to save document. The default value is Normal.  # noqa: E501
+
+        :param compression_level: The compression_level of this OpenXpsSaveOptionsData.  # noqa: E501
+        :type: str
+        """
+        allowed_values = ["Normal", "Maximum", "Fast", "SuperFast"]  # noqa: E501
+        if not compression_level.isdigit():
+            if compression_level not in allowed_values:
+                raise ValueError(
+                    "Invalid value for `compression_level` ({0}), must be one of {1}"  # noqa: E501
+                    .format(compression_level, allowed_values))
+            self._compression_level = compression_level
+        else:
+            self._compression_level = allowed_values[int(compression_level) if six.PY3 else long(compression_level)]
+
+    @property
     def digital_signature_details(self):
         """Gets the digital_signature_details of this OpenXpsSaveOptionsData.  # noqa: E501
 
@@ -821,6 +856,7 @@ class OpenXpsSaveOptionsData(object):
 
         if self._metafile_rendering_options is not None:
             self._metafile_rendering_options.validate()
+
 
 
 
