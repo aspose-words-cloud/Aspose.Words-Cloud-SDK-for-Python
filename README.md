@@ -19,6 +19,7 @@ Python Cloud SDK wraps Aspose.Words Cloud API so you could seamlessly integrate 
 ## Enhancements in Version 26.9
 
 - Added 'CompressionLevel' property for XpsSaveOptionsData class.
+- Added 'GenerateFormFieldScripts' property for PdfSaveOptionsData class.
 
 
 ## Enhancements in Version 26.6
