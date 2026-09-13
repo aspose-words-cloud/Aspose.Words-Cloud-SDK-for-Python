@@ -35,7 +35,13 @@ def runtests(dockerImageVersion)
             }
             
             if (needToBuild) {
+                // Root is needed so pip can write to the image's own site-packages, but it leaves
+                // root-owned files in the mounted workspace that cleanWs() cannot delete. Capture the
+                // agent's ids here and hand ownership back before leaving the container.
+                def agentUid = sh(script: 'id -u', returnStdout: true).trim()
+                def agentGid = sh(script: 'id -g', returnStdout: true).trim()
                 docker.image('python:' + dockerImageVersion).inside('-u root'){
+                    try {
                  if (params.packageTesting) {
                             sh "rm -rf asposewordscloud"
                             sh "mv requirements-test.txt requirements.txt"
@@ -59,6 +65,9 @@ def runtests(dockerImageVersion)
                     
                     stage('clean-compiled'){
                         sh "rm -rf %s"
+                    }
+                    } finally {
+                        sh "chown -R ${agentUid}:${agentGid} ."
                     }
                 } 
             }

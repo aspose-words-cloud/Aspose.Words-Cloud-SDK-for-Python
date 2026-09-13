@@ -77,6 +77,7 @@ class PdfSaveOptionsData(object):
         'export_document_structure': 'bool',
         'export_language_to_span_tag': 'bool',
         'font_embedding_mode': 'str',
+        'generate_form_field_scripts': 'bool',
         'header_footer_bookmarks_export_mode': 'str',
         'image_color_space_export_mode': 'str',
         'image_compression': 'str',
@@ -132,6 +133,7 @@ class PdfSaveOptionsData(object):
         'export_document_structure': 'ExportDocumentStructure',
         'export_language_to_span_tag': 'ExportLanguageToSpanTag',
         'font_embedding_mode': 'FontEmbeddingMode',
+        'generate_form_field_scripts': 'GenerateFormFieldScripts',
         'header_footer_bookmarks_export_mode': 'HeaderFooterBookmarksExportMode',
         'image_color_space_export_mode': 'ImageColorSpaceExportMode',
         'image_compression': 'ImageCompression',
@@ -152,7 +154,7 @@ class PdfSaveOptionsData(object):
         'save_format': 'SaveFormat'
     }
 
-    def __init__(self, allow_embedding_post_script_fonts=None, custom_time_zone_info_data=None, dml3_d_effects_rendering_mode=None, dml_effects_rendering_mode=None, dml_rendering_mode=None, file_name=None, iml_rendering_mode=None, update_ambiguous_text_font=None, update_created_time_property=None, update_fields=None, update_last_printed_property=None, update_last_saved_time_property=None, zip_output=None, color_mode=None, jpeg_quality=None, metafile_rendering_options=None, numeral_format=None, optimize_output=None, page_count=None, page_index=None, attachments_embedding_mode=None, cache_background_graphics=None, compliance=None, create_note_hyperlinks=None, custom_properties_export=None, digital_signature_details=None, display_doc_title=None, downsample_options=None, embed_attachments=None, embed_full_fonts=None, encryption_details=None, export_document_structure=None, export_language_to_span_tag=None, font_embedding_mode=None, header_footer_bookmarks_export_mode=None, image_color_space_export_mode=None, image_compression=None, interpolate_images=None, open_hyperlinks_in_new_window=None, outline_options=None, page_mode=None, preblend_images=None, preserve_form_fields=None, render_choice_form_field_border=None, text_compression=None, use_book_fold_printing_settings=None, use_core_fonts=None, use_sdt_tag_as_form_field_name=None, zoom_behavior=None, zoom_factor=None, export_floating_shapes_as_inline_tag=None):  # noqa: E501
+    def __init__(self, allow_embedding_post_script_fonts=None, custom_time_zone_info_data=None, dml3_d_effects_rendering_mode=None, dml_effects_rendering_mode=None, dml_rendering_mode=None, file_name=None, iml_rendering_mode=None, update_ambiguous_text_font=None, update_created_time_property=None, update_fields=None, update_last_printed_property=None, update_last_saved_time_property=None, zip_output=None, color_mode=None, jpeg_quality=None, metafile_rendering_options=None, numeral_format=None, optimize_output=None, page_count=None, page_index=None, attachments_embedding_mode=None, cache_background_graphics=None, compliance=None, create_note_hyperlinks=None, custom_properties_export=None, digital_signature_details=None, display_doc_title=None, downsample_options=None, embed_attachments=None, embed_full_fonts=None, encryption_details=None, export_document_structure=None, export_language_to_span_tag=None, font_embedding_mode=None, generate_form_field_scripts=None, header_footer_bookmarks_export_mode=None, image_color_space_export_mode=None, image_compression=None, interpolate_images=None, open_hyperlinks_in_new_window=None, outline_options=None, page_mode=None, preblend_images=None, preserve_form_fields=None, render_choice_form_field_border=None, text_compression=None, use_book_fold_printing_settings=None, use_core_fonts=None, use_sdt_tag_as_form_field_name=None, zoom_behavior=None, zoom_factor=None, export_floating_shapes_as_inline_tag=None):  # noqa: E501
         """PdfSaveOptionsData - a model defined in Swagger"""  # noqa: E501
 
         self._allow_embedding_post_script_fonts = None
@@ -189,6 +191,7 @@ class PdfSaveOptionsData(object):
         self._export_document_structure = None
         self._export_language_to_span_tag = None
         self._font_embedding_mode = None
+        self._generate_form_field_scripts = None
         self._header_footer_bookmarks_export_mode = None
         self._image_color_space_export_mode = None
         self._image_compression = None
@@ -277,6 +280,8 @@ class PdfSaveOptionsData(object):
             self.export_language_to_span_tag = export_language_to_span_tag
         if font_embedding_mode is not None:
             self.font_embedding_mode = font_embedding_mode
+        if generate_form_field_scripts is not None:
+            self.generate_form_field_scripts = generate_form_field_scripts
         if header_footer_bookmarks_export_mode is not None:
             self.header_footer_bookmarks_export_mode = header_footer_bookmarks_export_mode
         if image_color_space_export_mode is not None:
@@ -1141,6 +1146,28 @@ class PdfSaveOptionsData(object):
             self._font_embedding_mode = allowed_values[int(font_embedding_mode) if six.PY3 else long(font_embedding_mode)]
 
     @property
+    def generate_form_field_scripts(self):
+        """Gets the generate_form_field_scripts of this PdfSaveOptionsData.  # noqa: E501
+
+        Gets or sets a value determining  whether to generate scripts that emulate specific Microsoft Word form field behavior in PDF. Default is false. When this option is enabled, the exporter generates PDF JavaScript actions to emulate Microsoft Word form field behavior, such as date and time form fields with formatting and validation rules.When set to true, supported behavior will be exported as PDF JavaScript actions. When set to false, no form field scripts will be generated.Script execution depends on the PDF viewer. Some PDF viewers might ignore scripts, restrict script execution, or require the user to enable JavaScript.JavaScript actions are prohibited by PDF/A-1, PDF/A-2 and PDF/A-3 compliance. The false value will be used automatically in this case.  # noqa: E501
+
+        :return: The generate_form_field_scripts of this PdfSaveOptionsData.  # noqa: E501
+        :rtype: bool
+        """
+        return self._generate_form_field_scripts
+
+    @generate_form_field_scripts.setter
+    def generate_form_field_scripts(self, generate_form_field_scripts):
+        """Sets the generate_form_field_scripts of this PdfSaveOptionsData.
+
+        Gets or sets a value determining  whether to generate scripts that emulate specific Microsoft Word form field behavior in PDF. Default is false. When this option is enabled, the exporter generates PDF JavaScript actions to emulate Microsoft Word form field behavior, such as date and time form fields with formatting and validation rules.When set to true, supported behavior will be exported as PDF JavaScript actions. When set to false, no form field scripts will be generated.Script execution depends on the PDF viewer. Some PDF viewers might ignore scripts, restrict script execution, or require the user to enable JavaScript.JavaScript actions are prohibited by PDF/A-1, PDF/A-2 and PDF/A-3 compliance. The false value will be used automatically in this case.  # noqa: E501
+
+        :param generate_form_field_scripts: The generate_form_field_scripts of this PdfSaveOptionsData.  # noqa: E501
+        :type: bool
+        """
+        self._generate_form_field_scripts = generate_form_field_scripts
+
+    @property
     def header_footer_bookmarks_export_mode(self):
         """Gets the header_footer_bookmarks_export_mode of this PdfSaveOptionsData.  # noqa: E501
 
@@ -1622,6 +1649,7 @@ class PdfSaveOptionsData(object):
 
         if self._encryption_details is not None:
             self._encryption_details.validate()
+
 
 
 
