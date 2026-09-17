@@ -6,6 +6,7 @@ from __future__ import absolute_import
 
 # import models into model package
 from asposewordscloud.models.file_reference import FileReference
+from asposewordscloud.models.advanced_compare_options import AdvancedCompareOptions
 from asposewordscloud.models.api_error import ApiError
 from asposewordscloud.models.available_fonts_response import AvailableFontsResponse
 from asposewordscloud.models.azw3_save_options_data import Azw3SaveOptionsData

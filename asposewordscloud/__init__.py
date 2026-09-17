@@ -12,6 +12,7 @@ from asposewordscloud.job_handler import JobHandler
 from asposewordscloud.configuration import Configuration
 # import models into sdk package
 from asposewordscloud.models.file_reference import FileReference
+from asposewordscloud.models.advanced_compare_options import AdvancedCompareOptions
 from asposewordscloud.models.api_error import ApiError
 from asposewordscloud.models.available_fonts_response import AvailableFontsResponse
 from asposewordscloud.models.azw3_save_options_data import Azw3SaveOptionsData

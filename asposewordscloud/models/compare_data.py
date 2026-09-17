@@ -43,6 +43,7 @@ class CompareData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'advanced_options': 'AdvancedCompareOptions',
         'author': 'str',
         'compare_options': 'CompareOptions',
         'comparing_with_document': 'str',
@@ -52,6 +53,7 @@ class CompareData(object):
     }
 
     attribute_map = {
+        'advanced_options': 'AdvancedOptions',
         'author': 'Author',
         'compare_options': 'CompareOptions',
         'comparing_with_document': 'ComparingWithDocument',
@@ -60,9 +62,10 @@ class CompareData(object):
         'result_document_format': 'ResultDocumentFormat'
     }
 
-    def __init__(self, author=None, compare_options=None, comparing_with_document=None, date_time=None, file_reference=None, result_document_format=None):  # noqa: E501
+    def __init__(self, advanced_options=None, author=None, compare_options=None, comparing_with_document=None, date_time=None, file_reference=None, result_document_format=None):  # noqa: E501
         """CompareData - a model defined in Swagger"""  # noqa: E501
 
+        self._advanced_options = None
         self._author = None
         self._compare_options = None
         self._comparing_with_document = None
@@ -71,6 +74,8 @@ class CompareData(object):
         self._result_document_format = None
         self.discriminator = None
 
+        if advanced_options is not None:
+            self.advanced_options = advanced_options
         if author is not None:
             self.author = author
         if compare_options is not None:
@@ -83,6 +88,28 @@ class CompareData(object):
             self.file_reference = file_reference
         if result_document_format is not None:
             self.result_document_format = result_document_format
+
+    @property
+    def advanced_options(self):
+        """Gets the advanced_options of this CompareData.  # noqa: E501
+
+        Gets or sets advanced compare options that might help to produce more precise comparison output.  # noqa: E501
+
+        :return: The advanced_options of this CompareData.  # noqa: E501
+        :rtype: AdvancedCompareOptions
+        """
+        return self._advanced_options
+
+    @advanced_options.setter
+    def advanced_options(self, advanced_options):
+        """Sets the advanced_options of this CompareData.
+
+        Gets or sets advanced compare options that might help to produce more precise comparison output.  # noqa: E501
+
+        :param advanced_options: The advanced_options of this CompareData.  # noqa: E501
+        :type: AdvancedCompareOptions
+        """
+        self._advanced_options = advanced_options
 
     @property
     def author(self):
@@ -230,6 +257,12 @@ class CompareData(object):
             raise ValueError("Property Author in CompareData is required.")  # noqa: E501
         if self._file_reference is None:
             raise ValueError("Property FileReference in CompareData is required.")  # noqa: E501
+
+        if self._advanced_options is not None:
+            self._advanced_options.validate()
+
+
+
 
         if self._compare_options is not None:
             self._compare_options.validate()

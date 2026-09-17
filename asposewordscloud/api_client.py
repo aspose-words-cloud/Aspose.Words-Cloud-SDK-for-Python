@@ -76,6 +76,7 @@ class ApiClient(object):
     }
 
     MODEL_TYPES_MAPPING = {
+        'AdvancedCompareOptions, _': asposewordscloud.models.AdvancedCompareOptions,
         'ApiError, _': asposewordscloud.models.ApiError,
         'AvailableFontsResponse, _': asposewordscloud.models.AvailableFontsResponse,
         'Azw3SaveOptionsData, _': asposewordscloud.models.Azw3SaveOptionsData,
