@@ -121,7 +121,7 @@ class PdfDigitalSignatureDetailsData(object):
         :param hash_algorithm: The hash_algorithm of this PdfDigitalSignatureDetailsData.  # noqa: E501
         :type: str
         """
-        allowed_values = ["Sha256", "Sha384", "Sha512", "RipeMD160"]  # noqa: E501
+        allowed_values = ["Sha256", "Sha384", "Sha512", "RipeMD160", "Auto"]  # noqa: E501
         if not hash_algorithm.isdigit():
             if hash_algorithm not in allowed_values:
                 raise ValueError(
