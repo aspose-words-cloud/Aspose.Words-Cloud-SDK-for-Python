@@ -40,7 +40,7 @@ class TestFile(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestUploadFile.docx'
 
-        request_file_content = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_file_content = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.UploadFileRequest(file_content=request_file_content, path=remote_data_folder + '/' + remote_file_name)
 
         result = self.words_api.upload_file(request)
@@ -57,7 +57,7 @@ class TestFile(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestCopyFileSrc.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.CopyFileRequest(dest_path=remote_data_folder + '/TestCopyFileDest.docx', src_path=remote_data_folder + '/' + remote_file_name)
 
@@ -72,7 +72,7 @@ class TestFile(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestMoveFileSrc.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.MoveFileRequest(dest_path=self.remote_test_out + '/TestMoveFileDest_' + self.create_random_guid() + '.docx', src_path=remote_data_folder + '/' + remote_file_name)
 
@@ -87,7 +87,7 @@ class TestFile(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDeleteFile.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFileRequest(path=remote_data_folder + '/' + remote_file_name)
 
@@ -102,7 +102,7 @@ class TestFile(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDownloadFile.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DownloadFileRequest(path=remote_data_folder + '/' + remote_file_name)
 

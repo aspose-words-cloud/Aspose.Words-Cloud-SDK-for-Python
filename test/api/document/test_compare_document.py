@@ -43,8 +43,8 @@ class TestCompareDocument(BaseTestContext):
         remote_name1 = 'TestCompareDocument1.doc'
         remote_name2 = 'TestCompareDocument2.doc'
 
-        self.upload_file(remote_folder + '/' + remote_name1, open(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb'))
-        self.upload_file(remote_folder + '/' + remote_name2, open(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name1, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name2, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
 
         request_compare_data_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_folder + '/' + remote_name2)
         request_compare_data = asposewordscloud.CompareData(author='author', date_time=dateutil.parser.isoparse('2015-10-26T00:00:00.0000000Z'), file_reference=request_compare_data_file_reference)
@@ -65,9 +65,9 @@ class TestCompareDocument(BaseTestContext):
         local_name2 = 'compareTestDoc2.doc'
         remote_name2 = 'TestCompareDocument2.doc'
 
-        self.upload_file(remote_folder + '/' + remote_name2, open(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name2, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb')
         request_compare_data_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_folder + '/' + remote_name2)
         request_compare_data = asposewordscloud.CompareData(author='author', date_time=dateutil.parser.isoparse('2015-10-26T00:00:00.0000000Z'), file_reference=request_compare_data_file_reference)
         request = asposewordscloud.models.requests.CompareDocumentOnlineRequest(document=request_document, compare_data=request_compare_data, dest_file_name=self.remote_test_out + '/TestCompareDocumentOut.doc')
@@ -86,10 +86,10 @@ class TestCompareDocument(BaseTestContext):
         local_name2 = 'compareTestDoc2.doc'
         remote_name2 = 'TestCompareDocument2.doc'
 
-        self.upload_file(remote_folder + '/' + remote_name2, open(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name2, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb'))
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb')
-        request_compare_data_file_reference_stream = open(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name1), 'rb')
+        request_compare_data_file_reference_stream = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name2), 'rb')
         request_compare_data_file_reference = asposewordscloud.FileReference.fromLocalFileContent(request_compare_data_file_reference_stream)
         request_compare_data = asposewordscloud.CompareData(author='author', date_time=dateutil.parser.isoparse('2015-10-26T00:00:00.0000000Z'), file_reference=request_compare_data_file_reference)
         request = asposewordscloud.models.requests.CompareDocumentOnlineRequest(document=request_document, compare_data=request_compare_data, dest_file_name=self.remote_test_out + '/TestCompareDocumentOut.doc')
@@ -107,8 +107,8 @@ class TestCompareDocument(BaseTestContext):
         remote_name1 = 'TestCompareDocument1.docx'
         remote_name2 = 'TestCompareDocument2.docx'
 
-        self.upload_file(remote_folder + '/' + remote_name1, open(os.path.join(self.local_test_folder, 'Common/' + local_name), 'rb'))
-        self.upload_file(remote_folder + '/' + remote_name2, open(os.path.join(self.local_test_folder, 'Common/' + local_name), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name1, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_name), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name2, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_name), 'rb'))
 
         request_compare_data_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_folder + '/' + remote_name2, "12345")
         request_compare_data = asposewordscloud.CompareData(author='author', date_time=dateutil.parser.isoparse('2015-10-26T00:00:00.0000000Z'), file_reference=request_compare_data_file_reference)

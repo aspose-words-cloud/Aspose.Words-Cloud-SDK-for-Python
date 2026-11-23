@@ -41,7 +41,7 @@ class TestCompressDocument(BaseTestContext):
         local_name = 'TestCompress.docx'
         remote_name = 'TestCompress.docx'
 
-        self.upload_file(remote_folder + '/' + remote_name, open(os.path.join(self.local_test_folder, local_folder + '/' + local_name), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name), 'rb'))
 
         request_compress_options = asposewordscloud.CompressOptions()
         request = asposewordscloud.models.requests.CompressDocumentRequest(name=remote_name, compress_options=request_compress_options, folder=remote_folder)
@@ -57,7 +57,7 @@ class TestCompressDocument(BaseTestContext):
         local_folder = 'DocumentActions/CompressDocument'
         local_name = 'TestCompress.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + local_name), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + local_name), 'rb')
         request_compress_options = asposewordscloud.CompressOptions()
         request = asposewordscloud.models.requests.CompressDocumentOnlineRequest(document=request_document, compress_options=request_compress_options)
 

@@ -40,7 +40,7 @@ class TestDocument(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetDocumentRequest(document_name=remote_file_name, folder=remote_data_folder)
 

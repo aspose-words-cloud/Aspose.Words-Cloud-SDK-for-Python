@@ -40,7 +40,7 @@ class TestCompatibility(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestOptimizeDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_options = asposewordscloud.OptimizationOptions(ms_word_version='Word2002')
         request = asposewordscloud.models.requests.OptimizeDocumentRequest(name=remote_file_name, options=request_options, folder=remote_data_folder)
@@ -54,7 +54,7 @@ class TestCompatibility(BaseTestContext):
     def test_optimize_document_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_options = asposewordscloud.OptimizationOptions(ms_word_version='Word2002')
         request = asposewordscloud.models.requests.OptimizeDocumentOnlineRequest(document=request_document, options=request_options)
 

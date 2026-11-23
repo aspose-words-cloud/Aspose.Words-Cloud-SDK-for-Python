@@ -39,7 +39,7 @@ class TestDocWithPassword(BaseTestContext):
         local_file = 'Common/DocWithPassword.docx'
         remote_file_name = 'test_get_document_paragraphs.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphsRequest(name=remote_file_name, node_path='sections/0', folder=remote_data_folder, password='12345')
 

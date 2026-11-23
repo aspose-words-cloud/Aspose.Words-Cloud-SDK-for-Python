@@ -40,7 +40,7 @@ class TestRevisions(BaseTestContext):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
         remote_file_name = 'TestAcceptAllRevisions.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.AcceptAllRevisionsRequest(name=remote_file_name, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
@@ -55,7 +55,7 @@ class TestRevisions(BaseTestContext):
     def test_accept_all_revisions_online(self):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.AcceptAllRevisionsOnlineRequest(document=request_document)
 
         result = self.words_api.accept_all_revisions_online(request)
@@ -73,7 +73,7 @@ class TestRevisions(BaseTestContext):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
         remote_file_name = 'TestRejectAllRevisions.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.RejectAllRevisionsRequest(name=remote_file_name, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
@@ -88,7 +88,7 @@ class TestRevisions(BaseTestContext):
     def test_reject_all_revisions_online(self):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.RejectAllRevisionsOnlineRequest(document=request_document)
 
         result = self.words_api.reject_all_revisions_online(request)
@@ -106,7 +106,7 @@ class TestRevisions(BaseTestContext):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
         remote_file_name = 'TestAcceptAllRevisions.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetAllRevisionsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -121,7 +121,7 @@ class TestRevisions(BaseTestContext):
     def test_get_all_revisions_online(self):
         local_file = 'DocumentElements/Revisions/TestRevisions.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetAllRevisionsOnlineRequest(document=request_document)
 
         result = self.words_api.get_all_revisions_online(request)

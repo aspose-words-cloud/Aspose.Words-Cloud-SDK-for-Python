@@ -1,8 +1,8 @@
-certifi >= 14.05.14
+certifi >= 2020.12.5
 six >= 1.10
-python_dateutil >= 2.5.3
-setuptools >= 21.0.0
-urllib3 >= 1.15.1
+python_dateutil >= 2.8.1
+setuptools >= 56.2.0
+urllib3 >= 1.26.4
 requests-toolbelt >= 0.9.1
 pycryptodome >= 3.11.0
 typing_extensions >= 4.7.0

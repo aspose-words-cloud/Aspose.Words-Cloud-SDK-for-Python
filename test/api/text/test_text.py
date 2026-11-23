@@ -40,7 +40,7 @@ class TestText(BaseTestContext):
         remote_file_name = 'TestReplaceText.docx'
         local_file = 'Common/test_multi_pages.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_replace_text = asposewordscloud.ReplaceTextParameters(old_value='Testing', new_value='Aspose testing', is_match_case=True, is_match_whole_word=False, is_old_value_regex=False)
         request = asposewordscloud.models.requests.ReplaceTextRequest(name=remote_file_name, replace_text=request_replace_text, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
@@ -55,7 +55,7 @@ class TestText(BaseTestContext):
     def test_replace_text_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_replace_text = asposewordscloud.ReplaceTextParameters(old_value='aspose', new_value='aspose new', is_match_case=True, is_match_whole_word=False, is_old_value_regex=False)
         request = asposewordscloud.models.requests.ReplaceTextOnlineRequest(document=request_document, replace_text=request_replace_text)
 
@@ -71,7 +71,7 @@ class TestText(BaseTestContext):
         remote_file_name = 'TestSearch.docx'
         local_file = 'DocumentElements/Text/SampleWordDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.SearchRequest(name=remote_file_name, pattern='aspose', folder=remote_data_folder)
 
@@ -89,7 +89,7 @@ class TestText(BaseTestContext):
     def test_search_online(self):
         local_file = 'DocumentElements/Text/SampleWordDocument.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.SearchOnlineRequest(document=request_document, pattern='aspose')
 
         result = self.words_api.search_online(request)

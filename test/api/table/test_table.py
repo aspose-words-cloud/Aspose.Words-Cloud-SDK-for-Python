@@ -40,7 +40,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTables.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTablesRequest(name=remote_file_name, node_path='', folder=remote_data_folder)
 
@@ -57,7 +57,7 @@ class TestTable(BaseTestContext):
     def test_get_tables_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTablesOnlineRequest(document=request_document, node_path='')
 
         result = self.words_api.get_tables_online(request)
@@ -72,7 +72,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTablesWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTablesRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -91,7 +91,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTable.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableRequest(name=remote_file_name, index=1, node_path='', folder=remote_data_folder)
 
@@ -109,7 +109,7 @@ class TestTable(BaseTestContext):
     def test_get_table_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTableOnlineRequest(document=request_document, index=1, node_path='')
 
         result = self.words_api.get_table_online(request)
@@ -124,7 +124,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableRequest(name=remote_file_name, index=1, folder=remote_data_folder)
 
@@ -144,7 +144,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestDeleteTable.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteTableRequest(name=remote_file_name, index=1, node_path='', folder=remote_data_folder)
 
@@ -157,7 +157,7 @@ class TestTable(BaseTestContext):
     def test_delete_table_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteTableOnlineRequest(document=request_document, index=1, node_path='')
 
         result = self.words_api.delete_table_online(request)
@@ -172,7 +172,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestDeleteTableWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteTableRequest(name=remote_file_name, index=1, folder=remote_data_folder)
 
@@ -187,7 +187,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestInsertTable.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_table = asposewordscloud.TableInsert(columns_count=5, rows_count=4)
         request = asposewordscloud.models.requests.InsertTableRequest(name=remote_file_name, table=request_table, node_path='', folder=remote_data_folder)
@@ -206,7 +206,7 @@ class TestTable(BaseTestContext):
     def test_insert_table_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_table = asposewordscloud.TableInsert(columns_count=5, rows_count=4)
         request = asposewordscloud.models.requests.InsertTableOnlineRequest(document=request_document, table=request_table, node_path='')
 
@@ -222,7 +222,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestInsertTableWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_table = asposewordscloud.TableInsert(columns_count=5, rows_count=4)
         request = asposewordscloud.models.requests.InsertTableRequest(name=remote_file_name, table=request_table, folder=remote_data_folder)
@@ -243,7 +243,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableProperties.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTablePropertiesRequest(name=remote_file_name, index=1, node_path='', folder=remote_data_folder)
 
@@ -258,7 +258,7 @@ class TestTable(BaseTestContext):
     def test_get_table_properties_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTablePropertiesOnlineRequest(document=request_document, index=1, node_path='')
 
         result = self.words_api.get_table_properties_online(request)
@@ -273,7 +273,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTablePropertiesWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTablePropertiesRequest(name=remote_file_name, index=1, folder=remote_data_folder)
 
@@ -290,7 +290,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestUpdateTableProperties.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_properties = asposewordscloud.TableProperties(alignment='Right', allow_auto_fit=False, bidi=True, bottom_padding=1, cell_spacing=2.0, style_options='ColumnBands')
         request = asposewordscloud.models.requests.UpdateTablePropertiesRequest(name=remote_file_name, properties=request_properties, index=1, node_path='', folder=remote_data_folder)
@@ -309,7 +309,7 @@ class TestTable(BaseTestContext):
     def test_update_table_properties_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_properties = asposewordscloud.TableProperties(alignment='Right', allow_auto_fit=False, bidi=True, bottom_padding=1, cell_spacing=2, style_options='ColumnBands')
         request = asposewordscloud.models.requests.UpdateTablePropertiesOnlineRequest(document=request_document, properties=request_properties, index=1, node_path='')
 
@@ -325,7 +325,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestUpdateTablePropertiesWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_properties = asposewordscloud.TableProperties(alignment='Right', allow_auto_fit=False, bidi=True, bottom_padding=1.0, cell_spacing=2.0, style_options='ColumnBands')
         request = asposewordscloud.models.requests.UpdateTablePropertiesRequest(name=remote_file_name, properties=request_properties, index=1, folder=remote_data_folder)
@@ -346,7 +346,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableRow.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableRowRequest(name=remote_file_name, table_path='tables/1', index=0, folder=remote_data_folder)
 
@@ -362,7 +362,7 @@ class TestTable(BaseTestContext):
     def test_get_table_row_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTableRowOnlineRequest(document=request_document, table_path='tables/1', index=0)
 
         result = self.words_api.get_table_row_online(request)
@@ -377,7 +377,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestDeleteTableRow.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteTableRowRequest(name=remote_file_name, table_path='tables/1', index=0, folder=remote_data_folder)
 
@@ -390,7 +390,7 @@ class TestTable(BaseTestContext):
     def test_delete_table_row_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteTableRowOnlineRequest(document=request_document, table_path='tables/1', index=0)
 
         result = self.words_api.delete_table_row_online(request)
@@ -405,7 +405,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestInsertTableRow.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_row = asposewordscloud.TableRowInsert(columns_count=5)
         request = asposewordscloud.models.requests.InsertTableRowRequest(name=remote_file_name, row=request_row, node_path='sections/0/tables/2', folder=remote_data_folder)
@@ -422,7 +422,7 @@ class TestTable(BaseTestContext):
     def test_insert_table_row_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_row = asposewordscloud.TableRowInsert(columns_count=5)
         request = asposewordscloud.models.requests.InsertTableRowOnlineRequest(document=request_document, row=request_row, node_path='sections/0/tables/2')
 
@@ -438,7 +438,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableRowFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableRowFormatRequest(name=remote_file_name, table_path='sections/0/tables/2', index=0, folder=remote_data_folder)
 
@@ -453,7 +453,7 @@ class TestTable(BaseTestContext):
     def test_get_table_row_format_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTableRowFormatOnlineRequest(document=request_document, table_path='sections/0/tables/2', index=0)
 
         result = self.words_api.get_table_row_format_online(request)
@@ -468,7 +468,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestUpdateTableRowFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_format = asposewordscloud.TableRowFormat(allow_break_across_pages=True, heading_format=True, height=10.0, height_rule='Exactly')
         request = asposewordscloud.models.requests.UpdateTableRowFormatRequest(name=remote_file_name, format=request_format, table_path='sections/0/tables/2', index=0, folder=remote_data_folder)
@@ -486,7 +486,7 @@ class TestTable(BaseTestContext):
     def test_update_table_row_format_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_format = asposewordscloud.TableRowFormat(allow_break_across_pages=True, heading_format=True, height=10, height_rule='Auto')
         request = asposewordscloud.models.requests.UpdateTableRowFormatOnlineRequest(document=request_document, format=request_format, table_path='sections/0/tables/2', index=0)
 
@@ -502,7 +502,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableCell.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableCellRequest(name=remote_file_name, table_row_path='sections/0/tables/2/rows/0', index=0, folder=remote_data_folder)
 
@@ -517,7 +517,7 @@ class TestTable(BaseTestContext):
     def test_get_table_cell_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTableCellOnlineRequest(document=request_document, table_row_path='sections/0/tables/2/rows/0', index=0)
 
         result = self.words_api.get_table_cell_online(request)
@@ -532,7 +532,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestDeleteTableCell.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteTableCellRequest(name=remote_file_name, table_row_path='sections/0/tables/2/rows/0', index=0, folder=remote_data_folder)
 
@@ -545,7 +545,7 @@ class TestTable(BaseTestContext):
     def test_delete_table_cell_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteTableCellOnlineRequest(document=request_document, table_row_path='sections/0/tables/2/rows/0', index=0)
 
         result = self.words_api.delete_table_cell_online(request)
@@ -560,7 +560,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestInsertTableCell.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_cell = asposewordscloud.TableCellInsert()
         request = asposewordscloud.models.requests.InsertTableCellRequest(name=remote_file_name, cell=request_cell, table_row_path='sections/0/tables/2/rows/0', folder=remote_data_folder)
@@ -576,7 +576,7 @@ class TestTable(BaseTestContext):
     def test_insert_table_cell_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_cell = asposewordscloud.TableCellInsert()
         request = asposewordscloud.models.requests.InsertTableCellOnlineRequest(document=request_document, cell=request_cell, table_row_path='sections/0/tables/2/rows/0')
 
@@ -592,7 +592,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestGetTableCellFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetTableCellFormatRequest(name=remote_file_name, table_row_path='sections/0/tables/2/rows/0', index=0, folder=remote_data_folder)
 
@@ -607,7 +607,7 @@ class TestTable(BaseTestContext):
     def test_get_table_cell_format_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetTableCellFormatOnlineRequest(document=request_document, table_row_path='sections/0/tables/2/rows/0', index=0)
 
         result = self.words_api.get_table_cell_format_online(request)
@@ -622,7 +622,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestUpdateTableCellFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_format = asposewordscloud.TableCellFormat(bottom_padding=5.0, fit_text=True, horizontal_merge='First', wrap_text=True)
         request = asposewordscloud.models.requests.UpdateTableCellFormatRequest(name=remote_file_name, format=request_format, table_row_path='sections/0/tables/2/rows/0', index=0, folder=remote_data_folder)
@@ -640,7 +640,7 @@ class TestTable(BaseTestContext):
     def test_update_table_cell_format_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_format = asposewordscloud.TableCellFormat(bottom_padding=5, fit_text=True, horizontal_merge='First', wrap_text=True)
         request = asposewordscloud.models.requests.UpdateTableCellFormatOnlineRequest(document=request_document, format=request_format, table_row_path='sections/0/tables/2/rows/0', index=0)
 
@@ -656,7 +656,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestRenderTable.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.RenderTableRequest(name=remote_file_name, format='png', index=0, node_path='', folder=remote_data_folder)
 
@@ -670,7 +670,7 @@ class TestTable(BaseTestContext):
     def test_render_table_online(self):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.RenderTableOnlineRequest(document=request_document, format='png', index=0, node_path='')
 
         result = self.words_api.render_table_online(request)
@@ -685,7 +685,7 @@ class TestTable(BaseTestContext):
         local_file = 'DocumentElements/Tables/TablesGet.docx'
         remote_file_name = 'TestRenderTableWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.RenderTableRequest(name=remote_file_name, format='png', index=0, folder=remote_data_folder)
 

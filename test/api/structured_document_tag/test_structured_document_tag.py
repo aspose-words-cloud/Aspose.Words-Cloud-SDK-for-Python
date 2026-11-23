@@ -40,7 +40,7 @@ class TestStructuredDocumentTag(BaseTestContext):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
         remote_file_name = 'TestGetStructuredDocumentTags.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetStructuredDocumentTagsRequest(name=remote_file_name, node_path='sections/0/body/paragraphs/0', folder=remote_data_folder)
 
@@ -54,7 +54,7 @@ class TestStructuredDocumentTag(BaseTestContext):
     def test_get_structured_document_tags_online(self):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetStructuredDocumentTagsOnlineRequest(document=request_document, node_path='sections/0/body/paragraphs/0')
 
         result = self.words_api.get_structured_document_tags_online(request)
@@ -69,7 +69,7 @@ class TestStructuredDocumentTag(BaseTestContext):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
         remote_file_name = 'TestGetStructuredDocumentTag.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetStructuredDocumentTagRequest(name=remote_file_name, node_path='sections/0/body/paragraphs/0', index=0, folder=remote_data_folder)
 
@@ -83,7 +83,7 @@ class TestStructuredDocumentTag(BaseTestContext):
     def test_get_structured_document_tag_online(self):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetStructuredDocumentTagOnlineRequest(document=request_document, node_path='sections/0/body/paragraphs/0', index=0)
 
         result = self.words_api.get_structured_document_tag_online(request)
@@ -98,7 +98,7 @@ class TestStructuredDocumentTag(BaseTestContext):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
         remote_file_name = 'TestInsetStructuredDocumentTag.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_structured_document_tag = asposewordscloud.StructuredDocumentTagInsert(sdt_type='ComboBox', level='Inline')
         request = asposewordscloud.models.requests.InsertStructuredDocumentTagRequest(name=remote_file_name, structured_document_tag=request_structured_document_tag, node_path='sections/0/body/paragraphs/0', folder=remote_data_folder)
@@ -113,7 +113,7 @@ class TestStructuredDocumentTag(BaseTestContext):
     def test_insert_structured_document_tag_online(self):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_structured_document_tag = asposewordscloud.StructuredDocumentTagInsert(sdt_type='ComboBox', level='Inline')
         request = asposewordscloud.models.requests.InsertStructuredDocumentTagOnlineRequest(document=request_document, structured_document_tag=request_structured_document_tag, node_path='sections/0/body/paragraphs/0')
 
@@ -129,7 +129,7 @@ class TestStructuredDocumentTag(BaseTestContext):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
         remote_file_name = 'TestDeleteStructuredDocumentTag.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteStructuredDocumentTagRequest(name=remote_file_name, index=0, node_path='sections/0/body/paragraphs/0', folder=remote_data_folder)
 
@@ -142,7 +142,7 @@ class TestStructuredDocumentTag(BaseTestContext):
     def test_delete_structured_document_tag_online(self):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteStructuredDocumentTagOnlineRequest(document=request_document, index=0, node_path='sections/0/body/paragraphs/0')
 
         result = self.words_api.delete_structured_document_tag_online(request)
@@ -157,7 +157,7 @@ class TestStructuredDocumentTag(BaseTestContext):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
         remote_file_name = 'TestUpdateStructuredDocumentTag.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_structured_document_tag_list_items0 = asposewordscloud.StructuredDocumentTagListItem(display_text='Aspose Words', value='1')
         request_structured_document_tag_list_items1 = asposewordscloud.StructuredDocumentTagListItem(display_text='Hello world', value='2')
@@ -175,7 +175,7 @@ class TestStructuredDocumentTag(BaseTestContext):
     def test_update_structured_document_tag_online(self):
         local_file = 'DocumentElements/StructuredDocumentTag/StructuredDocumentTag.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_structured_document_tag_list_items0 = asposewordscloud.StructuredDocumentTagListItem(display_text='Aspose Words', value='1')
         request_structured_document_tag_list_items1 = asposewordscloud.StructuredDocumentTagListItem(display_text='Hello world', value='2')
         request_structured_document_tag_list_items = [request_structured_document_tag_list_items0, request_structured_document_tag_list_items1]

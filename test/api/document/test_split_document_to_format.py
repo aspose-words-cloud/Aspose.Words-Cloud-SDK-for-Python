@@ -40,7 +40,7 @@ class TestSplitDocumentToFormat(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestSplitDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.SplitDocumentRequest(name=remote_file_name, format='text', folder=remote_data_folder, dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
 
@@ -58,7 +58,7 @@ class TestSplitDocumentToFormat(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestSplitDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.SplitDocumentJobRequest(name=remote_file_name, format='text', folder=remote_data_folder, dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
 
@@ -75,7 +75,7 @@ class TestSplitDocumentToFormat(BaseTestContext):
     def test_split_document_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.SplitDocumentOnlineRequest(document=request_document, format='text', dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
 
         result = self.words_api.split_document_online(request)
@@ -88,7 +88,7 @@ class TestSplitDocumentToFormat(BaseTestContext):
     def test_split_document_online_job(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.SplitDocumentOnlineJobRequest(document=request_document, format='text', dest_file_name=self.remote_test_out + '/TestSplitDocument.text', _from=1, to=2)
 
         job_handler = self.words_api.split_document_online_job(request)

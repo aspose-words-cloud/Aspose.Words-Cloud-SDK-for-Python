@@ -42,7 +42,7 @@ class TestExecuteTemplate(BaseTestContext):
         remote_file_name = 'TestExecuteTemplate.docx'
         local_data_file = open(os.path.join(self.local_test_folder, mail_merge_folder + '/TestExecuteTemplateData.txt')).read()
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb'))
 
         request = asposewordscloud.models.requests.ExecuteMailMergeRequest(name=remote_file_name, data=local_data_file, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
@@ -59,8 +59,8 @@ class TestExecuteTemplate(BaseTestContext):
         local_document_file = 'SampleMailMergeTemplate.docx'
         local_data_file = 'SampleExecuteTemplateData.txt'
 
-        request_template = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
-        request_data = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_data_file), 'rb')
+        request_template = self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
+        request_data = self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_data_file), 'rb')
         request = asposewordscloud.models.requests.ExecuteMailMergeOnlineRequest(template=request_template, data=request_data)
 
         result = self.words_api.execute_mail_merge_online(request)

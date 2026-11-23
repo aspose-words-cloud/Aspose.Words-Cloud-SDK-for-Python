@@ -40,7 +40,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphByIndex.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphRequest(name=remote_file_name, index=0, node_path='sections/0', folder=remote_data_folder)
 
@@ -55,7 +55,7 @@ class TestParagraph(BaseTestContext):
     def test_get_document_paragraph_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetParagraphOnlineRequest(document=request_document, index=0, node_path='sections/0')
 
         result = self.words_api.get_paragraph_online(request)
@@ -70,7 +70,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphByIndexWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -87,7 +87,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphs.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphsRequest(name=remote_file_name, node_path='sections/0', folder=remote_data_folder)
 
@@ -104,7 +104,7 @@ class TestParagraph(BaseTestContext):
     def test_get_document_paragraphs_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetParagraphsOnlineRequest(document=request_document, node_path='sections/0')
 
         result = self.words_api.get_paragraphs_online(request)
@@ -119,7 +119,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -138,7 +138,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphRun.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetRunRequest(name=remote_file_name, paragraph_path='paragraphs/0', index=0, folder=remote_data_folder)
 
@@ -153,7 +153,7 @@ class TestParagraph(BaseTestContext):
     def test_get_document_paragraph_run_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetRunOnlineRequest(document=request_document, paragraph_path='paragraphs/0', index=0)
 
         result = self.words_api.get_run_online(request)
@@ -168,7 +168,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphRunFont.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetRunFontRequest(name=remote_file_name, paragraph_path='paragraphs/0', index=0, folder=remote_data_folder)
 
@@ -183,7 +183,7 @@ class TestParagraph(BaseTestContext):
     def test_get_document_paragraph_run_font_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetRunFontOnlineRequest(document=request_document, paragraph_path='paragraphs/0', index=0)
 
         result = self.words_api.get_run_font_online(request)
@@ -198,7 +198,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetParagraphRuns.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetRunsRequest(name=remote_file_name, paragraph_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
@@ -215,7 +215,7 @@ class TestParagraph(BaseTestContext):
     def test_get_paragraph_runs_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetRunsOnlineRequest(document=request_document, paragraph_path='sections/0/paragraphs/0')
 
         result = self.words_api.get_runs_online(request)
@@ -230,7 +230,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestUpdateRunFont.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_font_dto = asposewordscloud.Font(bold=True)
         request = asposewordscloud.models.requests.UpdateRunFontRequest(name=remote_file_name, font_dto=request_font_dto, paragraph_path='paragraphs/0', index=0, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
@@ -246,7 +246,7 @@ class TestParagraph(BaseTestContext):
     def test_update_run_font_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_font_dto = asposewordscloud.Font(bold=True)
         request = asposewordscloud.models.requests.UpdateRunFontOnlineRequest(document=request_document, font_dto=request_font_dto, paragraph_path='paragraphs/0', index=0)
 
@@ -262,7 +262,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestInsertParagraph.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_paragraph = asposewordscloud.ParagraphInsert(text='This is a new paragraph for your document')
         request = asposewordscloud.models.requests.InsertParagraphRequest(name=remote_file_name, paragraph=request_paragraph, node_path='sections/0', folder=remote_data_folder)
@@ -278,7 +278,7 @@ class TestParagraph(BaseTestContext):
     def test_insert_paragraph_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_paragraph = asposewordscloud.ParagraphInsert(text='This is a new paragraph for your document')
         request = asposewordscloud.models.requests.InsertParagraphOnlineRequest(document=request_document, paragraph=request_paragraph, node_path='sections/0')
 
@@ -294,7 +294,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestInsertParagraphWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_paragraph = asposewordscloud.ParagraphInsert(text='This is a new paragraph for your document')
         request = asposewordscloud.models.requests.InsertParagraphRequest(name=remote_file_name, paragraph=request_paragraph, folder=remote_data_folder)
@@ -312,7 +312,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestRenderParagraph.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.RenderParagraphRequest(name=remote_file_name, format='png', index=0, node_path='', folder=remote_data_folder)
 
@@ -326,7 +326,7 @@ class TestParagraph(BaseTestContext):
     def test_render_paragraph_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.RenderParagraphOnlineRequest(document=request_document, format='png', index=0, node_path='')
 
         result = self.words_api.render_paragraph_online(request)
@@ -341,7 +341,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestRenderParagraphWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.RenderParagraphRequest(name=remote_file_name, format='png', index=0, folder=remote_data_folder)
 
@@ -357,7 +357,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphs.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphFormatRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -372,7 +372,7 @@ class TestParagraph(BaseTestContext):
     def test_get_paragraph_format_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetParagraphFormatOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.get_paragraph_format_online(request)
@@ -387,7 +387,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphFormatRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -404,7 +404,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentParagraphs.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_paragraph_format_dto = asposewordscloud.ParagraphFormatUpdate(alignment='Right')
         request = asposewordscloud.models.requests.UpdateParagraphFormatRequest(name=remote_file_name, index=0, paragraph_format_dto=request_paragraph_format_dto, node_path='', folder=remote_data_folder)
@@ -420,7 +420,7 @@ class TestParagraph(BaseTestContext):
     def test_update_paragraph_format_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_paragraph_format_dto = asposewordscloud.ParagraphFormatUpdate(alignment='Right')
         request = asposewordscloud.models.requests.UpdateParagraphFormatOnlineRequest(document=request_document, index=0, paragraph_format_dto=request_paragraph_format_dto, node_path='')
 
@@ -436,7 +436,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDeleteParagraph.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -449,7 +449,7 @@ class TestParagraph(BaseTestContext):
     def test_delete_paragraph_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteParagraphOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.delete_paragraph_online(request)
@@ -464,7 +464,7 @@ class TestParagraph(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDeleteParagraphWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -479,7 +479,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestParagraphGetListFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphListFormatRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -494,7 +494,7 @@ class TestParagraph(BaseTestContext):
     def test_get_paragraph_list_format_online(self):
         list_folder = 'DocumentElements/ParagraphListFormat'
 
-        request_document = open(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb')
         request = asposewordscloud.models.requests.GetParagraphListFormatOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.get_paragraph_list_format_online(request)
@@ -509,7 +509,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestParagraphGetListFormatWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphGetListFormat.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphListFormatRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -526,7 +526,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestUpdateParagraphListFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb'))
 
         request_list_format_dto = asposewordscloud.ListFormatUpdate(list_id=2)
         request = asposewordscloud.models.requests.UpdateParagraphListFormatRequest(name=remote_file_name, index=0, list_format_dto=request_list_format_dto, node_path='', folder=remote_data_folder)
@@ -542,7 +542,7 @@ class TestParagraph(BaseTestContext):
     def test_update_paragraph_list_format_online(self):
         list_folder = 'DocumentElements/ParagraphListFormat'
 
-        request_document = open(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb')
         request_list_format_dto = asposewordscloud.ListFormatUpdate(list_id=2)
         request = asposewordscloud.models.requests.UpdateParagraphListFormatOnlineRequest(document=request_document, list_format_dto=request_list_format_dto, index=0, node_path='')
 
@@ -558,7 +558,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestUpdateParagraphListFormatWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphUpdateListFormat.doc'), 'rb'))
 
         request_list_format_dto = asposewordscloud.ListFormatUpdate(list_id=2)
         request = asposewordscloud.models.requests.UpdateParagraphListFormatRequest(name=remote_file_name, index=0, list_format_dto=request_list_format_dto, folder=remote_data_folder)
@@ -576,7 +576,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestDeleteParagraphListFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphListFormatRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -590,7 +590,7 @@ class TestParagraph(BaseTestContext):
     def test_delete_paragraph_list_format_online(self):
         list_folder = 'DocumentElements/ParagraphListFormat'
 
-        request_document = open(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb')
         request = asposewordscloud.models.requests.DeleteParagraphListFormatOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.delete_paragraph_list_format_online(request)
@@ -605,7 +605,7 @@ class TestParagraph(BaseTestContext):
         list_folder = 'DocumentElements/ParagraphListFormat'
         remote_file_name = 'TestDeleteParagraphListFormatWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, list_folder + '/ParagraphDeleteListFormat.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphListFormatRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -621,7 +621,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestGetParagraphTabStops.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphTabStopsRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -637,7 +637,7 @@ class TestParagraph(BaseTestContext):
     def test_get_paragraph_tab_stops_online(self):
         tab_stop_folder = 'DocumentElements/Paragraphs'
 
-        request_document = open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
         request = asposewordscloud.models.requests.GetParagraphTabStopsOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.get_paragraph_tab_stops_online(request)
@@ -652,7 +652,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestGetParagraphTabStopsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.GetParagraphTabStopsRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -670,7 +670,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestInsertOrUpdateParagraphTabStop.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request_tab_stop_insert_dto = asposewordscloud.TabStopInsert(alignment='Left', leader='None', position=100.0)
         request = asposewordscloud.models.requests.InsertOrUpdateParagraphTabStopRequest(name=remote_file_name, index=0, tab_stop_insert_dto=request_tab_stop_insert_dto, node_path='', folder=remote_data_folder)
@@ -689,7 +689,7 @@ class TestParagraph(BaseTestContext):
     def test_insert_paragraph_tab_stops_online(self):
         tab_stop_folder = 'DocumentElements/Paragraphs'
 
-        request_document = open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
         request_tab_stop_insert_dto = asposewordscloud.TabStopInsert(alignment='Left', leader='None', position=72)
         request = asposewordscloud.models.requests.InsertOrUpdateParagraphTabStopOnlineRequest(document=request_document, tab_stop_insert_dto=request_tab_stop_insert_dto, index=0, node_path='')
 
@@ -705,7 +705,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestInsertOrUpdateParagraphTabStopWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request_tab_stop_insert_dto = asposewordscloud.TabStopInsert(alignment='Left', leader='None', position=100.0)
         request = asposewordscloud.models.requests.InsertOrUpdateParagraphTabStopRequest(name=remote_file_name, index=0, tab_stop_insert_dto=request_tab_stop_insert_dto, folder=remote_data_folder)
@@ -726,7 +726,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestDeleteAllParagraphTabStops.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteAllParagraphTabStopsRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -741,7 +741,7 @@ class TestParagraph(BaseTestContext):
     def test_delete_all_paragraph_tab_stops_online(self):
         tab_stop_folder = 'DocumentElements/Paragraphs'
 
-        request_document = open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
         request = asposewordscloud.models.requests.DeleteAllParagraphTabStopsOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.delete_all_paragraph_tab_stops_online(request)
@@ -756,7 +756,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestDeleteAllParagraphTabStopsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteAllParagraphTabStopsRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -773,7 +773,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestDeleteParagraphTabStop.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphTabStopRequest(name=remote_file_name, position=72.0, index=0, node_path='', folder=remote_data_folder)
 
@@ -788,7 +788,7 @@ class TestParagraph(BaseTestContext):
     def test_delete_paragraph_tab_stop_online(self):
         tab_stop_folder = 'DocumentElements/Paragraphs'
 
-        request_document = open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb')
         request = asposewordscloud.models.requests.DeleteParagraphTabStopOnlineRequest(document=request_document, position=72.0, index=0, node_path='')
 
         result = self.words_api.delete_paragraph_tab_stop_online(request)
@@ -803,7 +803,7 @@ class TestParagraph(BaseTestContext):
         tab_stop_folder = 'DocumentElements/Paragraphs'
         remote_file_name = 'TestDeleteParagraphTabStopWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, tab_stop_folder + '/ParagraphTabStops.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteParagraphTabStopRequest(name=remote_file_name, position=72.0, index=0, folder=remote_data_folder)
 

@@ -40,7 +40,7 @@ class TestBookmark(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentBookmarks.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetBookmarksRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -54,7 +54,7 @@ class TestBookmark(BaseTestContext):
     def test_get_bookmarks_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetBookmarksOnlineRequest(document=request_document)
 
         result = self.words_api.get_bookmarks_online(request)
@@ -70,7 +70,7 @@ class TestBookmark(BaseTestContext):
         bookmark_name = 'aspose'
         remote_file_name = 'TestGetDocumentBookmarkByName.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetBookmarkByNameRequest(name=remote_file_name, bookmark_name=bookmark_name, folder=remote_data_folder)
 
@@ -85,7 +85,7 @@ class TestBookmark(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         bookmark_name = 'aspose'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetBookmarkByNameOnlineRequest(document=request_document, bookmark_name=bookmark_name)
 
         result = self.words_api.get_bookmark_by_name_online(request)
@@ -102,7 +102,7 @@ class TestBookmark(BaseTestContext):
         remote_file_name = 'TestUpdateDocumentBookmark.docx'
         bookmark_text = 'This will be the text for Aspose'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_bookmark_data = asposewordscloud.BookmarkData(name=bookmark_name, text=bookmark_text)
         request = asposewordscloud.models.requests.UpdateBookmarkRequest(name=remote_file_name, bookmark_name=bookmark_name, bookmark_data=request_bookmark_data, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
@@ -119,7 +119,7 @@ class TestBookmark(BaseTestContext):
         bookmark_name = 'aspose'
         remote_file_name = 'TestUpdateDocumentBookmark.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_bookmark_data = asposewordscloud.BookmarkData(name=bookmark_name, text='This will be the text for Aspose')
         request = asposewordscloud.models.requests.UpdateBookmarkOnlineRequest(document=request_document, bookmark_name=bookmark_name, bookmark_data=request_bookmark_data, dest_file_name=self.remote_test_out + '/' + remote_file_name)
 
@@ -136,7 +136,7 @@ class TestBookmark(BaseTestContext):
         bookmark_name = 'aspose'
         remote_file_name = 'TestDeleteBookmark.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteBookmarkRequest(name=remote_file_name, bookmark_name=bookmark_name, folder=remote_data_folder)
 
@@ -150,7 +150,7 @@ class TestBookmark(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         bookmark_name = 'aspose'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteBookmarkOnlineRequest(document=request_document, bookmark_name=bookmark_name)
 
         result = self.words_api.delete_bookmark_online(request)
@@ -165,7 +165,7 @@ class TestBookmark(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDeleteBookmarks.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteBookmarksRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -178,7 +178,7 @@ class TestBookmark(BaseTestContext):
     def test_delete_bookmarks_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteBookmarksOnlineRequest(document=request_document)
 
         result = self.words_api.delete_bookmarks_online(request)
@@ -193,7 +193,7 @@ class TestBookmark(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestInsertBookmark.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_bookmark_start_range = asposewordscloud.PositionInsideNode(node_id='0.0.0.0', offset=0)
         request_bookmark_end_range = asposewordscloud.PositionInsideNode(node_id='0.0.0.0', offset=0)
@@ -210,7 +210,7 @@ class TestBookmark(BaseTestContext):
     def test_insert_bookmark_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_bookmark_start_range = asposewordscloud.PositionInsideNode(node_id='0.0.0.0', offset=0)
         request_bookmark_end_range = asposewordscloud.PositionInsideNode(node_id='0.0.0.0', offset=0)
         request_bookmark = asposewordscloud.BookmarkInsert(start_range=request_bookmark_start_range, end_range=request_bookmark_end_range, name='new_bookmark', text='Some text')

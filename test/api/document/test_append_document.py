@@ -40,7 +40,7 @@ class TestAppendDocument(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestAppendDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_data_folder + '/' + remote_file_name)
         request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
@@ -61,7 +61,7 @@ class TestAppendDocument(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestAppendDocument.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromRemoteFilePath(remote_data_folder + '/' + remote_file_name)
         request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
@@ -81,8 +81,8 @@ class TestAppendDocument(BaseTestContext):
     def test_append_document_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
-        request_document_list_document_entries0_file_reference_stream = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document_list_document_entries0_file_reference_stream = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromLocalFileContent(request_document_list_document_entries0_file_reference_stream)
         request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
         request_document_list_document_entries = [request_document_list_document_entries0]
@@ -99,8 +99,8 @@ class TestAppendDocument(BaseTestContext):
     def test_append_document_online_job(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
-        request_document_list_document_entries0_file_reference_stream = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document_list_document_entries0_file_reference_stream = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_document_list_document_entries0_file_reference = asposewordscloud.FileReference.fromLocalFileContent(request_document_list_document_entries0_file_reference_stream)
         request_document_list_document_entries0 = asposewordscloud.DocumentEntry(file_reference=request_document_list_document_entries0_file_reference, import_format_mode='KeepSourceFormatting')
         request_document_list_document_entries = [request_document_list_document_entries0]

@@ -40,7 +40,7 @@ class TestSection(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetSection.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetSectionRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
@@ -57,7 +57,7 @@ class TestSection(BaseTestContext):
     def test_get_section_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetSectionOnlineRequest(document=request_document, section_index=0)
 
         result = self.words_api.get_section_online(request)
@@ -72,7 +72,7 @@ class TestSection(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetSections.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetSectionsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -89,7 +89,7 @@ class TestSection(BaseTestContext):
     def test_get_sections_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetSectionsOnlineRequest(document=request_document)
 
         result = self.words_api.get_sections_online(request)
@@ -104,7 +104,7 @@ class TestSection(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestDeleteSection.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteSectionRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
@@ -117,7 +117,7 @@ class TestSection(BaseTestContext):
     def test_delete_section_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.DeleteSectionOnlineRequest(document=request_document, section_index=0)
 
         result = self.words_api.delete_section_online(request)
@@ -131,7 +131,7 @@ class TestSection(BaseTestContext):
         remote_data_folder = self.remote_test_folder + '/DocumentElements/Section'
         remote_file_name = 'TestMergeWithNext.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.MergeWithNextRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
@@ -142,7 +142,7 @@ class TestSection(BaseTestContext):
     # Test for merge a section with the next one online.
     #
     def test_merge_with_next_online(self):
-        request_document = open(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb')
         request = asposewordscloud.models.requests.MergeWithNextOnlineRequest(document=request_document, section_index=0)
 
         result = self.words_api.merge_with_next_online(request)
@@ -157,7 +157,7 @@ class TestSection(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestInsertSection.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.InsertSectionRequest(name=remote_file_name, section_index=0, folder=remote_data_folder)
 
@@ -170,7 +170,7 @@ class TestSection(BaseTestContext):
     def test_insert_section_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.InsertSectionOnlineRequest(document=request_document, section_index=0)
 
         result = self.words_api.insert_section_online(request)
@@ -184,7 +184,7 @@ class TestSection(BaseTestContext):
         remote_data_folder = self.remote_test_folder + '/DocumentElements/Section'
         remote_file_name = 'TestLinkHeaderFootersToPrevious.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'DocumentElements/Sections/Source.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.LinkHeaderFootersToPreviousRequest(name=remote_file_name, section_index=1, folder=remote_data_folder)
 

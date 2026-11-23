@@ -51,7 +51,7 @@ class TestFolder(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         test_delete_folder = remote_data_folder + '/TestDeleteFolder'
 
-        self.upload_file(test_delete_folder + '/TestDeleteFolder.docx', open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(test_delete_folder + '/TestDeleteFolder.docx', self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFolderRequest(path=test_delete_folder, recursive=True)
 
@@ -78,7 +78,7 @@ class TestFolder(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         folder_to_copy = remote_data_folder + '/TestCopyFolder'
 
-        self.upload_file(folder_to_copy + 'Src/TestCopyFolderSrc.docx', open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(folder_to_copy + 'Src/TestCopyFolderSrc.docx', self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.CopyFolderRequest(dest_path=folder_to_copy + 'Dest', src_path=folder_to_copy + 'Src')
 
@@ -92,7 +92,7 @@ class TestFolder(BaseTestContext):
         remote_data_folder = self.remote_test_folder + '/Storage'
         local_file = 'Common/test_multi_pages.docx'
 
-        self.upload_file(remote_data_folder + '/TestMoveFolderSrc/TestMoveFolderSrc.docx', open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/TestMoveFolderSrc/TestMoveFolderSrc.docx', self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.MoveFolderRequest(dest_path=self.remote_test_out + '/TestMoveFolderDest_' + self.create_random_guid(), src_path=remote_data_folder + '/TestMoveFolderSrc')
 

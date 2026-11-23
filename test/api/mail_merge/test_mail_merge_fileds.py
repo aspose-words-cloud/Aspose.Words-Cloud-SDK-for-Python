@@ -39,7 +39,7 @@ class TestMailMergeFileds(BaseTestContext):
         mail_merge_folder = 'DocumentActions/MailMerge'
         local_document_file = 'SampleExecuteTemplate.docx'
 
-        request_template = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
+        request_template = self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
         request = asposewordscloud.models.requests.GetDocumentFieldNamesOnlineRequest(template=request_template, use_non_merge_fields=True)
 
         result = self.words_api.get_document_field_names_online(request)
@@ -56,7 +56,7 @@ class TestMailMergeFileds(BaseTestContext):
         remote_data_folder = self.remote_test_folder + '/DocumentActions/MailMerge'
         remote_file_name = 'TestGetDocumentFieldNames.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/test_multi_pages.docx'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/test_multi_pages.docx'), 'rb'))
 
         request = asposewordscloud.models.requests.GetDocumentFieldNamesRequest(name=remote_file_name, folder=remote_data_folder)
 

@@ -41,7 +41,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestGetFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.GetFieldsRequest(name=remote_file_name, node_path='sections/0', folder=remote_data_folder)
 
@@ -58,7 +58,7 @@ class TestField(BaseTestContext):
     def test_get_fields_online(self):
         field_folder = 'DocumentElements/Fields'
 
-        request_document = open(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
         request = asposewordscloud.models.requests.GetFieldsOnlineRequest(document=request_document, node_path='sections/0')
 
         result = self.words_api.get_fields_online(request)
@@ -74,7 +74,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestGetFieldsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.GetFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -94,7 +94,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestGetField.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.GetFieldRequest(name=remote_file_name, index=0, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
@@ -109,7 +109,7 @@ class TestField(BaseTestContext):
     def test_get_field_online(self):
         field_folder = 'DocumentElements/Fields'
 
-        request_document = open(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
         request = asposewordscloud.models.requests.GetFieldOnlineRequest(document=request_document, index=0, node_path='sections/0/paragraphs/0')
 
         result = self.words_api.get_field_online(request)
@@ -125,7 +125,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestGetFieldWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.GetFieldRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -143,7 +143,7 @@ class TestField(BaseTestContext):
         local_file_name = 'SampleWordDocument.docx'
         remote_file_name = 'TestInsertField.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, text_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, text_folder + '/' + local_file_name), 'rb'))
 
         request_field = asposewordscloud.FieldInsert(field_code='{ NUMPAGES }')
         request = asposewordscloud.models.requests.InsertFieldRequest(name=remote_file_name, field=request_field, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
@@ -160,7 +160,7 @@ class TestField(BaseTestContext):
     def test_insert_field_online(self):
         field_folder = 'DocumentElements/Fields'
 
-        request_document = open(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
         request_field = asposewordscloud.FieldInsert(field_code='{ NUMPAGES }')
         request = asposewordscloud.models.requests.InsertFieldOnlineRequest(document=request_document, field=request_field, node_path='sections/0/paragraphs/0')
 
@@ -177,7 +177,7 @@ class TestField(BaseTestContext):
         local_file_name = 'SampleWordDocument.docx'
         remote_file_name = 'TestInsertFieldWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, text_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, text_folder + '/' + local_file_name), 'rb'))
 
         request_field = asposewordscloud.FieldInsert(field_code='{ NUMPAGES }')
         request = asposewordscloud.models.requests.InsertFieldRequest(name=remote_file_name, field=request_field, folder=remote_data_folder)
@@ -197,7 +197,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestUpdateField.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request_field = asposewordscloud.FieldUpdate(field_code='{ NUMPAGES }')
         request = asposewordscloud.models.requests.UpdateFieldRequest(name=remote_file_name, index=0, field=request_field, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
@@ -214,7 +214,7 @@ class TestField(BaseTestContext):
     def test_update_field_online(self):
         field_folder = 'DocumentElements/Fields'
 
-        request_document = open(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
         request_field = asposewordscloud.FieldUpdate(field_code='{ NUMPAGES }')
         request = asposewordscloud.models.requests.UpdateFieldOnlineRequest(document=request_document, index=0, field=request_field, node_path='sections/0/paragraphs/0')
 
@@ -230,7 +230,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestInsertPageNumbers.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request_page_number = asposewordscloud.PageNumber(alignment='center', format='{PAGE} of {NUMPAGES}', is_top=True, set_page_number_on_first_page=True)
         request = asposewordscloud.models.requests.InsertPageNumbersRequest(name=remote_file_name, page_number=request_page_number, folder=remote_data_folder, dest_file_name=self.remote_test_out + '/' + remote_file_name)
@@ -246,7 +246,7 @@ class TestField(BaseTestContext):
     def test_insert_page_numbers_online(self):
         local_file_name = 'test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb')
         request_page_number = asposewordscloud.PageNumber(alignment='center', format='{PAGE} of {NUMPAGES}', is_top=True, set_page_number_on_first_page=True)
         request = asposewordscloud.models.requests.InsertPageNumbersOnlineRequest(document=request_document, page_number=request_page_number)
 
@@ -263,7 +263,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestDeleteField.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldRequest(name=remote_file_name, index=0, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
@@ -276,7 +276,7 @@ class TestField(BaseTestContext):
     def test_delete_field_online(self):
         field_folder = 'DocumentElements/Fields'
 
-        request_document = open(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, field_folder + '/GetField.docx'), 'rb')
         request = asposewordscloud.models.requests.DeleteFieldOnlineRequest(document=request_document, index=0, node_path='sections/0/paragraphs/0')
 
         result = self.words_api.delete_field_online(request)
@@ -292,7 +292,7 @@ class TestField(BaseTestContext):
         local_file_name = 'GetField.docx'
         remote_file_name = 'TestDeleteFieldWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, field_folder + '/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -307,7 +307,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteParagraphFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='paragraphs/0', folder=remote_data_folder)
 
@@ -322,7 +322,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteParagraphFieldsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -337,7 +337,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteSectionFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='sections/0', folder=remote_data_folder)
 
@@ -352,7 +352,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteSectionFieldsWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -367,7 +367,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteSectionParagraphFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='sections/0/paragraphs/0', folder=remote_data_folder)
 
@@ -382,7 +382,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestDeleteSectionParagraphFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFieldsRequest(name=remote_file_name, node_path='', folder=remote_data_folder)
 
@@ -395,7 +395,7 @@ class TestField(BaseTestContext):
     def test_delete_document_fields_online(self):
         local_file_name = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file_name), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file_name), 'rb')
         request = asposewordscloud.models.requests.DeleteFieldsOnlineRequest(document=request_document, node_path='')
 
         result = self.words_api.delete_fields_online(request)
@@ -410,7 +410,7 @@ class TestField(BaseTestContext):
         local_file_name = 'test_multi_pages.docx'
         remote_file_name = 'TestUpdateDocumentFields.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, 'Common/' + local_file_name), 'rb'))
 
         request = asposewordscloud.models.requests.UpdateFieldsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -425,7 +425,7 @@ class TestField(BaseTestContext):
     def test_update_document_fields_online(self):
         local_file = 'Common/test_multi_pages.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.UpdateFieldsOnlineRequest(document=request_document)
 
         result = self.words_api.update_fields_online(request)

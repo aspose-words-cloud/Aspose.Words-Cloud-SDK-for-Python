@@ -41,7 +41,7 @@ class TestSignature(BaseTestContext):
         signed_document = 'signedDocument.docx'
         remote_name = 'TestGetSignatures.docx'
 
-        self.upload_file(remote_folder + '/' + remote_name, open(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb'))
 
         request = asposewordscloud.models.requests.GetSignaturesRequest(name=remote_name, folder=remote_folder)
 
@@ -57,7 +57,7 @@ class TestSignature(BaseTestContext):
         local_folder = 'DocumentActions/Signature'
         signed_document = 'signedDocument.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb')
         request = asposewordscloud.models.requests.GetSignaturesOnlineRequest(document=request_document)
 
         result = self.words_api.get_signatures_online(request)
@@ -74,7 +74,7 @@ class TestSignature(BaseTestContext):
         signed_document = 'signedDocument.docx'
         remote_name = 'TestRemoveAllSignatures.docx'
 
-        self.upload_file(remote_folder + '/' + remote_name, open(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb'))
 
         request = asposewordscloud.models.requests.RemoveAllSignaturesRequest(name=remote_name, folder=remote_folder)
 
@@ -90,7 +90,7 @@ class TestSignature(BaseTestContext):
         local_folder = 'DocumentActions/Signature'
         signed_document = 'signedDocument.docx'
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + signed_document), 'rb')
         request = asposewordscloud.models.requests.RemoveAllSignaturesOnlineRequest(document=request_document)
 
         result = self.words_api.remove_all_signatures_online(request)
@@ -110,8 +110,8 @@ class TestSignature(BaseTestContext):
         remote_name = 'TestSignDocument.docx'
         remote_certificate_name = 'TestCertificate.pfx'
 
-        self.upload_file(remote_folder + '/' + remote_name, open(os.path.join(self.local_test_folder, local_folder + '/' + unsigned_document), 'rb'))
-        self.upload_file(remote_folder + '/' + remote_certificate_name, open(os.path.join(self.local_test_folder, local_folder + '/' + certificate_name), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + unsigned_document), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_certificate_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + certificate_name), 'rb'))
 
         request = asposewordscloud.models.requests.SignDocumentRequest(name=remote_name, certificate_path=remote_folder + '/' + remote_certificate_name, certificate_password=certificate_password, folder=remote_folder)
 
@@ -131,9 +131,9 @@ class TestSignature(BaseTestContext):
         certificate_password = 'aw'
         remote_certificate_name = 'TestCertificateOnline.pfx'
 
-        self.upload_file(remote_folder + '/' + remote_certificate_name, open(os.path.join(self.local_test_folder, local_folder + '/' + certificate_name), 'rb'))
+        self.upload_file(remote_folder + '/' + remote_certificate_name, self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + certificate_name), 'rb'))
 
-        request_document = open(os.path.join(self.local_test_folder, local_folder + '/' + unsigned_document), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_folder + '/' + unsigned_document), 'rb')
         request = asposewordscloud.models.requests.SignDocumentOnlineRequest(document=request_document, certificate_path=remote_folder + '/' + remote_certificate_name, certificate_password=certificate_password)
 
         result = self.words_api.sign_document_online(request)

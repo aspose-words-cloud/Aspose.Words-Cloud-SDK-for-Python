@@ -40,7 +40,7 @@ class TestDocumentWithFormat(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentWithFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetDocumentWithFormatRequest(name=remote_file_name, format='text', folder=remote_data_folder)
 
@@ -56,7 +56,7 @@ class TestDocumentWithFormat(BaseTestContext):
         local_file = 'Common/test_multi_pages.docx'
         remote_file_name = 'TestGetDocumentWithFormat.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetDocumentWithFormatRequest(name=remote_file_name, format='text', folder=remote_data_folder, out_path=self.remote_test_out + '/TestGetDocumentWithFormatAndOutPath.text')
 

@@ -40,7 +40,7 @@ class TestLists(BaseTestContext):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
         remote_file_name = 'TestGetLists.doc'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetListsRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -57,7 +57,7 @@ class TestLists(BaseTestContext):
     def test_get_lists_online(self):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetListsOnlineRequest(document=request_document)
 
         result = self.words_api.get_lists_online(request)
@@ -72,7 +72,7 @@ class TestLists(BaseTestContext):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
         remote_file_name = 'TestGetList.doc'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request = asposewordscloud.models.requests.GetListRequest(name=remote_file_name, list_id=1, folder=remote_data_folder)
 
@@ -87,7 +87,7 @@ class TestLists(BaseTestContext):
     def test_get_list_online(self):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request = asposewordscloud.models.requests.GetListOnlineRequest(document=request_document, list_id=1)
 
         result = self.words_api.get_list_online(request)
@@ -102,7 +102,7 @@ class TestLists(BaseTestContext):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
         remote_file_name = 'TestUpdateList.doc'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_list_update = asposewordscloud.ListUpdate(is_restart_at_each_section=True)
         request = asposewordscloud.models.requests.UpdateListRequest(name=remote_file_name, list_id=1, list_update=request_list_update, folder=remote_data_folder)
@@ -117,7 +117,7 @@ class TestLists(BaseTestContext):
     def test_update_list_online(self):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_list_update = asposewordscloud.ListUpdate(is_restart_at_each_section=True)
         request = asposewordscloud.models.requests.UpdateListOnlineRequest(document=request_document, list_id=1, list_update=request_list_update)
 
@@ -135,7 +135,7 @@ class TestLists(BaseTestContext):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
         remote_file_name = 'TestUpdateListLevel.doc'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_list_update = asposewordscloud.ListLevelUpdate(alignment='Right')
         request = asposewordscloud.models.requests.UpdateListLevelRequest(name=remote_file_name, list_id=1, list_level=1, list_update=request_list_update, folder=remote_data_folder)
@@ -150,7 +150,7 @@ class TestLists(BaseTestContext):
     def test_update_list_level_online(self):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_list_update = asposewordscloud.ListLevelUpdate(alignment='Right')
         request = asposewordscloud.models.requests.UpdateListLevelOnlineRequest(document=request_document, list_id=1, list_level=1, list_update=request_list_update)
 
@@ -170,7 +170,7 @@ class TestLists(BaseTestContext):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
         remote_file_name = 'TestInsertList.doc'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, local_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, local_file), 'rb'))
 
         request_list_insert = asposewordscloud.ListInsert(template='OutlineLegal')
         request = asposewordscloud.models.requests.InsertListRequest(name=remote_file_name, list_insert=request_list_insert, folder=remote_data_folder)
@@ -186,7 +186,7 @@ class TestLists(BaseTestContext):
     def test_insert_list_online(self):
         local_file = 'DocumentElements/Lists/ListsGet.doc'
 
-        request_document = open(os.path.join(self.local_test_folder, local_file), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, local_file), 'rb')
         request_list_insert = asposewordscloud.ListInsert(template='OutlineLegal')
         request = asposewordscloud.models.requests.InsertListOnlineRequest(document=request_document, list_insert=request_list_insert)
 

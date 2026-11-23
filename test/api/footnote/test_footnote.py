@@ -40,7 +40,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestInsertFootnote.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request_footnote_dto = asposewordscloud.FootnoteInsert(footnote_type='Endnote', text='test endnote')
         request = asposewordscloud.models.requests.InsertFootnoteRequest(name=remote_file_name, footnote_dto=request_footnote_dto, node_path='', folder=remote_data_folder)
@@ -57,7 +57,7 @@ class TestFootnote(BaseTestContext):
     def test_insert_footnote_online(self):
         footnote_folder = 'DocumentElements/Footnotes'
 
-        request_document = open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
         request_footnote_dto = asposewordscloud.FootnoteInsert(footnote_type='Endnote', text='test endnote')
         request = asposewordscloud.models.requests.InsertFootnoteOnlineRequest(document=request_document, footnote_dto=request_footnote_dto, node_path='')
 
@@ -73,7 +73,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestInsertFootnoteWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request_footnote_dto = asposewordscloud.FootnoteInsert(footnote_type='Endnote', text='test endnote')
         request = asposewordscloud.models.requests.InsertFootnoteRequest(name=remote_file_name, footnote_dto=request_footnote_dto, folder=remote_data_folder)
@@ -92,7 +92,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestDeleteFootnote.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFootnoteRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -105,7 +105,7 @@ class TestFootnote(BaseTestContext):
     def test_delete_footnote_online(self):
         footnote_folder = 'DocumentElements/Footnotes'
 
-        request_document = open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
         request = asposewordscloud.models.requests.DeleteFootnoteOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.delete_footnote_online(request)
@@ -120,7 +120,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestDeleteFootnoteWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.DeleteFootnoteRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -135,7 +135,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestGetFootnotes.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetFootnotesRequest(name=remote_file_name, node_path='', folder=remote_data_folder)
 
@@ -152,7 +152,7 @@ class TestFootnote(BaseTestContext):
     def test_get_footnotes_online(self):
         footnote_folder = 'DocumentElements/Footnotes'
 
-        request_document = open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
         request = asposewordscloud.models.requests.GetFootnotesOnlineRequest(document=request_document, node_path='')
 
         result = self.words_api.get_footnotes_online(request)
@@ -167,7 +167,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestGetFootnotesWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetFootnotesRequest(name=remote_file_name, folder=remote_data_folder)
 
@@ -186,7 +186,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestGetFootnote.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetFootnoteRequest(name=remote_file_name, index=0, node_path='', folder=remote_data_folder)
 
@@ -201,7 +201,7 @@ class TestFootnote(BaseTestContext):
     def test_get_footnote_online(self):
         footnote_folder = 'DocumentElements/Footnotes'
 
-        request_document = open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
         request = asposewordscloud.models.requests.GetFootnoteOnlineRequest(document=request_document, index=0, node_path='')
 
         result = self.words_api.get_footnote_online(request)
@@ -216,7 +216,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestGetFootnoteWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request = asposewordscloud.models.requests.GetFootnoteRequest(name=remote_file_name, index=0, folder=remote_data_folder)
 
@@ -233,7 +233,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestUpdateFootnote.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request_footnote_dto = asposewordscloud.FootnoteUpdate(text='new text is here')
         request = asposewordscloud.models.requests.UpdateFootnoteRequest(name=remote_file_name, index=0, footnote_dto=request_footnote_dto, node_path='', folder=remote_data_folder)
@@ -249,7 +249,7 @@ class TestFootnote(BaseTestContext):
     def test_update_footnote_online(self):
         footnote_folder = 'DocumentElements/Footnotes'
 
-        request_document = open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
+        request_document = self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb')
         request_footnote_dto = asposewordscloud.FootnoteUpdate(text='new text is here')
         request = asposewordscloud.models.requests.UpdateFootnoteOnlineRequest(document=request_document, index=0, footnote_dto=request_footnote_dto, node_path='')
 
@@ -265,7 +265,7 @@ class TestFootnote(BaseTestContext):
         footnote_folder = 'DocumentElements/Footnotes'
         remote_file_name = 'TestUpdateFootnoteWithoutNodePath.docx'
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, footnote_folder + '/Footnote.doc'), 'rb'))
 
         request_footnote_dto = asposewordscloud.FootnoteUpdate(text='new text is here')
         request = asposewordscloud.models.requests.UpdateFootnoteRequest(name=remote_file_name, index=0, footnote_dto=request_footnote_dto, folder=remote_data_folder)

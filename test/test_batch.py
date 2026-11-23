@@ -41,7 +41,7 @@ class TestBatch(BaseTestContext):
     def test_batch(self):
         filename = 'test_multi_pages.docx'
         remote_name = 'TestBatchParagraphs.docx'
-        file = open(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
+        file = self.open_file(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
         remote_path = os.path.join(self.remote_test_folder, self.test_folder, remote_name)
         remote_folder = os.path.join(self.remote_test_folder, self.test_folder)
         paragraph = asposewordscloud.models.ParagraphInsert(text="This is a new paragraph for your document")
@@ -53,10 +53,10 @@ class TestBatch(BaseTestContext):
 
         reportingFolder = 'DocumentActions/Reporting'
         localDocumentFile = 'ReportTemplate.docx'
-        localDataFile = open(os.path.join(self.local_test_folder, reportingFolder + '/ReportData.json')).read()
+        localDataFile = self.open_file(os.path.join(self.local_test_folder, reportingFolder + '/ReportData.json'), 'r').read()
         requestReportEngineSettings = asposewordscloud.ReportEngineSettings(data_source_type='Json', data_source_name='persons')
         request5 = asposewordscloud.models.requests.BuildReportOnlineRequest(
-            template=open(os.path.join(self.local_test_folder, reportingFolder + '/' + localDocumentFile), 'rb'),
+            template=self.open_file(os.path.join(self.local_test_folder, reportingFolder + '/' + localDocumentFile), 'rb'),
             data=localDataFile, report_engine_settings=requestReportEngineSettings)
 
         self.words_api.upload_file(request0)
@@ -81,7 +81,7 @@ class TestBatch(BaseTestContext):
     def test_batch_without_intermidiate_results(self):
         filename = 'test_multi_pages.docx'
         remote_name = 'TestBatchParagraphs.docx'
-        file = open(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
+        file = self.open_file(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
         remote_path = os.path.join(self.remote_test_folder, self.test_folder, remote_name)
         remote_folder = os.path.join(self.remote_test_folder, self.test_folder)
         paragraph = asposewordscloud.models.ParagraphInsert(text="This is a new paragraph for your document")
@@ -93,10 +93,10 @@ class TestBatch(BaseTestContext):
 
         reportingFolder = 'DocumentActions/Reporting'
         localDocumentFile = 'ReportTemplate.docx'
-        localDataFile = open(os.path.join(self.local_test_folder, reportingFolder + '/ReportData.json')).read()
+        localDataFile = self.open_file(os.path.join(self.local_test_folder, reportingFolder + '/ReportData.json'), 'r').read()
         requestReportEngineSettings = asposewordscloud.ReportEngineSettings(data_source_type='Json', data_source_name='persons')
         request5 = asposewordscloud.models.requests.BuildReportOnlineRequest(
-            template=open(os.path.join(self.local_test_folder, reportingFolder + '/' + localDocumentFile), 'rb'),
+            template=self.open_file(os.path.join(self.local_test_folder, reportingFolder + '/' + localDocumentFile), 'rb'),
             data=localDataFile, report_engine_settings=requestReportEngineSettings)
 
         self.words_api.upload_file(request0)
@@ -117,7 +117,7 @@ class TestBatch(BaseTestContext):
     def test_batch_with_reversed_order(self):
         filename = 'test_multi_pages.docx'
         remote_name = 'test_batch_with_reversed_order.docx'
-        file = open(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
+        file = self.open_file(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
         remote_path = os.path.join(self.remote_test_folder, self.test_folder, remote_name)
         remote_folder = os.path.join(self.remote_test_folder, self.test_folder)
 
@@ -142,7 +142,7 @@ class TestBatch(BaseTestContext):
     def test_batch_with_result_of(self):
         filename = 'test_multi_pages.docx'
         remote_name = 'test_batch_with_result_of.docx'
-        file = open(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
+        file = self.open_file(os.path.join(self.local_test_folder, self.local_common_folder, filename), 'rb')
         remote_path = os.path.join(self.remote_test_folder, self.test_folder, remote_name)
         remote_folder = os.path.join(self.remote_test_folder, self.test_folder)
 

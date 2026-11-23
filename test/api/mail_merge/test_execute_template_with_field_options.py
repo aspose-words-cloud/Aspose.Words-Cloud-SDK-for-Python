@@ -42,7 +42,7 @@ class TestExecuteTemplateWithFieldOptions(BaseTestContext):
         remote_file_name = 'TestMailMergeWithOptions.docx'
         local_data_file = open(os.path.join(self.local_test_folder, mail_merge_folder + '/TestMailMergeData.xml')).read()
 
-        self.upload_file(remote_data_folder + '/' + remote_file_name, open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb'))
+        self.upload_file(remote_data_folder + '/' + remote_file_name, self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb'))
 
         request_options_current_user = asposewordscloud.UserInformation(name='SdkTestUser')
         request_options = asposewordscloud.FieldOptions(current_user=request_options_current_user)
@@ -61,8 +61,8 @@ class TestExecuteTemplateWithFieldOptions(BaseTestContext):
         local_document_file = 'TestMailMergeWithOptions.docx'
         local_data_file = 'TestMailMergeData.xml'
 
-        request_template = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
-        request_data = open(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_data_file), 'rb')
+        request_template = self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_document_file), 'rb')
+        request_data = self.open_file(os.path.join(self.local_test_folder, mail_merge_folder + '/' + local_data_file), 'rb')
         request_options_current_user = asposewordscloud.UserInformation(name='SdkTestUser')
         request_options = asposewordscloud.FieldOptions(current_user=request_options_current_user)
         request = asposewordscloud.models.requests.ExecuteMailMergeOnlineRequest(template=request_template, data=request_data, options=request_options)

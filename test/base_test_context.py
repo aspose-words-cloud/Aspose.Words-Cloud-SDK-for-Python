@@ -63,6 +63,11 @@ class BaseTestContext(unittest.TestCase):
         if six.PY3:
             warnings.simplefilter("ignore", ResourceWarning)
 
+    def open_file(self, path, mode='rb'):
+        file = open(path, mode)
+        self.addCleanup(file.close)
+        return file
+
     def upload_file(self, path, file):
         request = asposewordscloud.models.requests.UploadFileRequest(file, path)
         _result = self.words_api.upload_file(request)
