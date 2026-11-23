@@ -47,7 +47,7 @@ def publishToPypi()
 				// agent's ids here and hand ownership back before leaving the container.
 				def agentUid = sh(script: 'id -u', returnStdout: true).trim()
 				def agentGid = sh(script: 'id -g', returnStdout: true).trim()
-				docker.image('python:3.6').inside('-u root'){
+				docker.image('python:3.11').inside('-u root'){
 					try {
 					sh "python -m pip install --upgrade setuptools wheel"
 					sh "python setup.py sdist bdist_wheel"

@@ -1,1 +1,1 @@
-docker run --rm -v %cd%:/opt/project -w="/opt/project" python:3.7 /bin/bash scripts/test-unittest.sh
+docker run --rm -v %cd%:/opt/project -w="/opt/project" python:3.11 /bin/bash scripts/test-unittest.sh
