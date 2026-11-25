@@ -136,6 +136,7 @@ class ApiClient(object):
         'DrawingObject, _': asposewordscloud.models.DrawingObject,
         'DrawingObjectCollection, _': asposewordscloud.models.DrawingObjectCollection,
         'DrawingObjectInsert, _': asposewordscloud.models.DrawingObjectInsert,
+        'DrawingObjectInsertData, _': asposewordscloud.models.DrawingObjectInsertData,
         'DrawingObjectLink, _': asposewordscloud.models.DrawingObjectLink,
         'DrawingObjectResponse, _': asposewordscloud.models.DrawingObjectResponse,
         'DrawingObjectsResponse, _': asposewordscloud.models.DrawingObjectsResponse,

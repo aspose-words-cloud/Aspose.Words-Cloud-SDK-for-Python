@@ -66,6 +66,7 @@ from asposewordscloud.models.downsample_options_data import DownsampleOptionsDat
 from asposewordscloud.models.drawing_object import DrawingObject
 from asposewordscloud.models.drawing_object_collection import DrawingObjectCollection
 from asposewordscloud.models.drawing_object_insert import DrawingObjectInsert
+from asposewordscloud.models.drawing_object_insert_data import DrawingObjectInsertData
 from asposewordscloud.models.drawing_object_link import DrawingObjectLink
 from asposewordscloud.models.drawing_object_response import DrawingObjectResponse
 from asposewordscloud.models.drawing_objects_response import DrawingObjectsResponse

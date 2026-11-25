@@ -137,6 +137,7 @@ class InsertDrawingObjectRequest(BaseRequestObject):
         form_params = []
         if self.drawing_object is not None:
             form_params.append(['drawingObject', self.drawing_object, 'json'])  # noqa: E501
+            self.drawing_object.extract_files_content(file_content_params)
         if self.image_file is not None:
             form_params.append(['imageFile', self.image_file, 'file'])  # noqa: E501
 
